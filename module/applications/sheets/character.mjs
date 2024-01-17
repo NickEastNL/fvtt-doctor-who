@@ -1,9 +1,6 @@
-import { DistinctionsConfig } from '../_module.mjs';
+import { SkillConfig } from '../_module.mjs';
 
 export default class CharacterSheet extends ActorSheet {
-	attributes = this.attributes;
-	skills = this.skills;
-
 	static get defaultOptions() {
 		const options = super.defaultOptions;
 
@@ -32,41 +29,52 @@ export default class CharacterSheet extends ActorSheet {
 		context.focus.intensity =
 			SYSTEM.GENERAL_RULES.FOCUS_INTENSITY[context.focus.intensity];
 
-		context.storyPoints = this.#formatStoryPoints(actor.storyPoints);
+		context.storyPoints = this.#formatStoryPoints();
 
-		// context.attributes = this.#formatAttributes(actor.attributes);
-		// context.skills = this.#formatSkills(actor.skills);
+		// TODO: Add modifiers from XP spends.
+		context.attributes = this.#formatAttributes(actor.system.attributes);
+		context.skills = this.#formatSkills(actor.system.skills);
 
 		context.distinctions = this.#formatDistinctions(actor.distinctions);
 
 		context.conditions = actor.system.conditions;
 
-		console.log(this);
+		console.log(context);
 
 		return context;
 	}
 
-	#formatStoryPoints(storyPoints) {
-		const points = foundry.utils.deepClone(storyPoints);
+	#formatStoryPoints() {
+		const storyPoints = this.actor.system.storyPoints;
+		const basePoints = this.actor.system.derivedPoints.storyPoints;
+		const points = {
+			base: basePoints,
+			current: storyPoints,
+		};
 
-		if (points.points > 1) points.canDecrease = true;
-		if (points.points > points.base) points.overLimit = true;
+		if (points.current > 0) points.canDecrease = true;
+		if (points.current > points.base) points.overLimit = true;
 
 		return points;
 	}
 
 	#formatAttributes(source) {
-		const attributes = foundry.utils.deepClone(source);
-		let availablePoints = attributes.values.reduce((points, attribute) => {
-			return points - attribute.base;
-		}, attributes.maxPoints);
-
+		const derivedPoints = this.actor.system.derivedPoints;
+		const availablePoints = derivedPoints.attributes.available;
 		const hasPoints = availablePoints > 0;
 
-		attributes.hasPoints = hasPoints;
-		attributes.availablePoints = availablePoints;
-		attributes.values = Object.values(attributes.values).map((attribute) => {
-			if (attribute.base < attributes.cap && hasPoints) attribute.canIncreaseBase = true;
+		const result = {};
+		result.hasPoints = hasPoints;
+		result.availablePoints = availablePoints;
+		result.transferPoints = this.actor.system.transferPoints;
+		result.canTransfer = derivedPoints.canTransfer;
+		result.values = Object.values(SYSTEM.ATTRIBUTES).map((cfg) => {
+			const attribute = foundry.utils.deepClone(cfg);
+			attribute.base = source[attribute.id].base;
+			attribute.current = source[attribute.id].current;
+
+			if (attribute.base < derivedPoints.attributes.cap && hasPoints)
+				attribute.canIncreaseBase = true;
 			if (attribute.base > 1) attribute.canDecreaseBase = true;
 
 			if (attribute.current < attribute.base) attribute.canIncreaseCur = true;
@@ -86,27 +94,29 @@ export default class CharacterSheet extends ActorSheet {
 			return attribute;
 		});
 
-		return attributes;
+		return result;
 	}
 
-	// TODO: Spare Attribute Points must be deducted when spending on Skills
 	#formatSkills(source) {
-		const skills = foundry.utils.deepClone(source);
-		const availablePoints = skills.values.reduce((points, skill) => {
-			return points - skill.base;
-		}, skills.maxPoints);
+		const derivedPoints = this.actor.system.derivedPoints.skills;
+		const availablePoints = derivedPoints.available;
 		const hasPoints = availablePoints > 0;
 
-		skills.hasPoints = hasPoints;
-		skills.availablePoints = availablePoints;
-		skills.values = Object.values(skills.values).map((skill) => {
-			if (skill.base < skills.cap && hasPoints) skill.canIncrease = true;
+		const result = {};
+		result.hasPoints = hasPoints;
+		result.availablePoints = availablePoints;
+		result.values = Object.values(SYSTEM.SKILLS).map((cfg) => {
+			const skill = foundry.utils.deepClone(cfg);
+			skill.base = source[skill.id].base;
+			skill.specialisations = source[skill.id].specialisations;
+
+			if (skill.base < derivedPoints.cap && hasPoints) skill.canIncrease = true;
 			if (skill.base > 0) skill.canDecrease = true;
 
 			return skill;
 		});
 
-		return skills;
+		return result;
 	}
 
 	#formatDistinctions(distinctions) {
@@ -129,70 +139,69 @@ export default class CharacterSheet extends ActorSheet {
 		event.preventDefault();
 		const b = event.currentTarget;
 		switch (b.dataset.action) {
+			// Adjust Story Points
 			case 'storyPointsIncrease':
 				return this.actor.updateStoryPoints(1);
 			case 'storyPointsDecrease':
 				return this.actor.updateStoryPoints(-1);
+
+			// Transfer Attribute Points
 			case 'transferAttrPoints':
-				return this.#transferAttrPoints();
+				return this.actor.transferAttrPoints();
 			case 'restoreAttrPoints':
-				return this.#restoreAttrPoints();
-			case 'attributeIncreaseBase':
-				return this.actor.updateAttribute(b.closest('.attribute').dataset.attribute, 1);
-			case 'attributeDecreaseBase':
-				return this.actor.updateAttribute(b.closest('.attribute').dataset.attribute, -1);
-			case 'attributeIncreaseCur':
-				return this.actor.updateAttribute(
-					b.closest('.attribute').dataset.attribute,
-					1,
-					false
-				);
-			case 'attributeDecreaseCur':
-				return this.actor.updateAttribute(
-					b.closest('.attribute').dataset.attribute,
-					-1,
-					false
-				);
+				return this.actor.transferAttrPoints(false);
+
+			// Adjust Attribute
+			case 'attributeIncreaseBase': {
+				const attribute = b.closest('.attribute').dataset.attribute;
+				return this.actor.updateAttribute(attribute, 1);
+			}
+			case 'attributeDecreaseBase': {
+				const attribute = b.closest('.attribute').dataset.attribute;
+				return this.actor.updateAttribute(attribute, -1);
+			}
+			case 'attributeIncreaseCur': {
+				const attribute = b.closest('.attribute').dataset.attribute;
+				return this.actor.updateAttribute(attribute, 1, false);
+			}
+			case 'attributeDecreaseCur': {
+				const attribute = b.closest('.attribute').dataset.attribute;
+				return this.actor.updateAttribute(attribute, -1, false);
+			}
+
+			// Adjust Skills
 			case 'skillIncrease':
 				return this.actor.updateSkill(b.closest('.skill').dataset.skill, 1);
 			case 'skillDecrease':
 				return this.actor.updateSkill(b.closest('.skill').dataset.skill, -1);
+			case 'skillConfig': {
+				const skillId = b.closest('.skill').dataset.skill;
+				return new SkillConfig(this.actor, skillId).render(true);
+			}
+
+			// Edit Specialisations
 			case 'editSpecialisations':
 				return this.actor.editSpecialisations(b.closest('.skill').dataset.skill, 'edit');
-			case 'editDistinctions':
-				return new DistinctionsConfig(this.actor).render(true);
+
+			// Modify Distinctions
 			case 'addDistinction':
 				return this.#editDistinction();
 			case 'editDistinction':
 				return this.#editDistinction('edit', b);
 			case 'deleteDistinction':
 				return this.#editDistinction('delete', b);
+
+			// Modify Conditions
 			case 'addCondition':
 				return this.actor.editCondition();
-			case 'editCondition':
-				return this.actor.editCondition(
-					'edit',
-					b.closest('.stat-list-item').dataset.index
-				);
-			case 'removeCondition':
-				return this.actor.editCondition(
-					'remove',
-					b.closest('.stat-list-item').dataset.index
-				);
-		}
-	}
-
-	#transferAttrPoints() {
-		if (this.attributes.availablePoints > 0) {
-			this.skills.attrPoints = this.attributes.availablePoints;
-			this.actor.setFlag(SYSTEM.id, 'transferAttrPoints', true);
-		}
-	}
-
-	#restoreAttrPoints() {
-		if (this.skills.availablePoints >= this.skill.attrPoints) {
-			this.attributes.availablePoints += this.skills.attrPoints;
-			this.actor.setFlag(SYSTEM.id, 'transferAttrPoints', false);
+			case 'editCondition': {
+				const index = b.closest('.stat-list-item').dataset.index;
+				return this.actor.editCondition('edit', index);
+			}
+			case 'removeCondition': {
+				const index = b.closest('.stat-list-item').dataset.index;
+				return this.actor.editCondition('remove', index);
+			}
 		}
 	}
 
@@ -205,16 +214,14 @@ export default class CharacterSheet extends ActorSheet {
 
 		switch (action) {
 			case 'add':
-				Item.create(
+				return Item.create(
 					{ name, type: 'distinction' },
 					{ parent: this.actor, renderSheet: true }
 				);
-				return;
 			case 'edit':
-				item?.sheet.render(true);
-				return;
+				return item?.sheet.render(true);
 			case 'delete':
-				item?.deleteDialog();
+				return item?.deleteDialog();
 		}
 	}
 }

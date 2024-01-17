@@ -53,7 +53,7 @@
 						<i class="fas fa-caret-left"></i>
 					</a>
 					<span class="input {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
-						{{storyPoints.points}}
+						{{storyPoints.current}}
 					</span>
 					<a class="stat-control" data-action="storyPointsIncrease">
 						<i class="fas fa-caret-right"></i>
@@ -100,8 +100,8 @@
 
 					<div class="points-counter">
 						<span class="input score" data-tooltip="Available Points">{{attributes.availablePoints}}</span>
-						{{#if attributes.hasPoints}}
-						{{#if attributes.toSkills}}
+						{{#if attributes.canTransfer}}
+						{{#if attributes.transferPoints}}
 						<a class="" data-tooltip="Return Skill Points" data-action="restoreAttrPoints">
 							<i class="fas fa-arrow-up"></i>
 						</a>
@@ -163,7 +163,6 @@
 
 					<div class="points-counter">
 						<span class="input score" data-tooltip="Available Points">{{skills.availablePoints}}</span>
-						<span class="input score" data-tooltip="Available Attribute Points">{{skills.attrPoints}}</span>
 					</div>
 				</div>
 
@@ -175,7 +174,9 @@
 				<ol class="stat-values flexcol">
 					{{#each skills.values as |skill|}}
 					<li class="stat skill flexrow" data-skill="{{skill.id}}">
-						<h4 class="label {{skill.id}}">{{skill.label}}</h4>
+						<h4 class="label {{skill.id}}">
+							<a data-action="skillConfig">{{skill.label}}</a>
+						</h4>
 						<div class="stat-controls flexcol">
 							<a class="stat-control {{#unless skill.canIncrease}}inactive{{/unless}}" title="Skill Increase" data-action="skillIncrease">
 								<i class="fas fa-caret-up"></i>
@@ -218,12 +219,9 @@
 
 				<ol class="stat-list">
 					{{#each distinctions as |d|}}
-					<li class="stat-list-item flexrow" data-item-id="{{d._id}}">
-						<span>{{d.name}} {{#if d.modifier}}*{{/if}}</span>
-						<div class="buttons list-options">
-							<a class="button" data-action="editDistinction">
-								<i class="fas fa-pen-to-square"></i>
-							</a>
+					<li class="stat-list-item distinction" data-item-id="{{d._id}}">
+						<a class="button {{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
+						<div class="buttons">
 							<a class="button" data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
 							</a>
@@ -274,10 +272,10 @@
 				</h2>
 
 				<ol class="stat-list">
-					{{#each lists.conditions as |c|}}
-					<li class="stat-list-item flexrow" data-index="{{@index}}">
+					{{#each conditions as |c|}}
+					<li class="stat-list-item condition" data-index="{{@index}}">
 						<span>{{c}}</span>
-						<div class="buttons list-options">
+						<div class="buttons">
 							<a class="button" data-action="editCondition">
 								<i class="fas fa-pen-to-square"></i>
 							</a>

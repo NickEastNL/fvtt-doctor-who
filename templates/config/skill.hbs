@@ -1,0 +1,20 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header flexrow">
+		<h1>{{config.label}}</h1>
+
+		<div class="purchase">
+			<span class="input score">{{skill.base}}</span>
+			<span class="input score">{{skillPoints}}</span>
+		</div>
+	</header>
+
+	<section class="sheet-body flexcol">
+		<h2>{{localize "CHARACTER.Specialisations"}}</h2>
+
+		<ol>
+			{{#each skill.specialisations as |s|}}
+			<li>{{s}}</li>
+			{{/each}}
+		</ol>
+	</section>
+</form>

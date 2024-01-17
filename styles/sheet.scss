@@ -36,6 +36,11 @@
 		}
 	}
 
+	.form-group,
+	.form-group-stacked {
+		gap: 4px;
+	}
+
 	.sheet-info {
 		margin-bottom: var(--margin-size);
 		padding-bottom: var(--margin-size);
@@ -252,7 +257,18 @@
 		}
 
 		&-item {
+			display: flex;
 			position: relative;
+
+			> :first-child {
+				flex: 1;
+			}
+		}
+	}
+
+	.distinction {
+		.modifiers {
+			font-weight: bold;
 		}
 	}
 

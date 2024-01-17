@@ -2,13 +2,13 @@ import { StatListDialog } from '../applications/_module.mjs';
 import { SYSTEM } from '../config.mjs';
 
 export default class CharacterActor extends Actor {
-	storyPoints = this.storyPoints;
-
-	attributes = this.attributes;
-
 	distinctions = this.distinctions;
 
 	gadgets = this.gadgets;
+
+	get skills() {
+		return this.system.skills;
+	}
 
 	prepareEmbeddedDocuments() {
 		super.prepareEmbeddedDocuments();
@@ -20,8 +20,6 @@ export default class CharacterActor extends Actor {
 
 	prepareDerivedData() {
 		this.storyPoints = this._prepareStoryPoints();
-		// this.attributes = this._prepareAttributes();
-		// this.skills = this._prepareSkills();
 	}
 
 	_prepareStoryPoints() {
@@ -39,72 +37,6 @@ export default class CharacterActor extends Actor {
 		return {
 			points,
 			base: SYSTEM.STORY_POINTS.BASE - totalCost,
-		};
-	}
-
-	_prepareAttributes() {
-		const defaultCap = SYSTEM.ATTRIBUTE_RULES.DEFAULT_CAP;
-		const defaultPoints = SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS;
-
-		const expDistinctions = this.distinctions.reduce(
-			(result, d) => {
-				const options = d.system.options;
-				return {
-					modAttrPoints: result.modAttrPoints + options.modAttrPoints,
-					modAttrCap: result.modAttrCap + options.modAttrCap,
-				};
-			},
-			{
-				modAttrPoints: 0,
-				modAttrCap: 0,
-			}
-		);
-
-		const values = Object.values(SYSTEM.ATTRIBUTES).map((cfg) => {
-			const attribute = foundry.utils.deepClone(cfg);
-			attribute.base = this.system.attributes[attribute.id].base;
-			attribute.mod = attribute.base;
-			attribute.current = this.system.attributes[attribute.id].current;
-			return attribute;
-		});
-
-		return {
-			maxPoints: defaultPoints + expDistinctions.modAttrPoints,
-			cap: defaultCap + expDistinctions.modAttrCap,
-			values,
-		};
-	}
-
-	_prepareSkills() {
-		const defaultCap = SYSTEM.SKILL_RULES.DEFAULT_CAP;
-		const defaultPoints = SYSTEM.SKILL_RULES.DEFAULT_POINTS;
-
-		const expDistinctions = this.distinctions.reduce(
-			(result, d) => {
-				const options = d.system.options;
-				return {
-					modSkillPoints: result.modSkillPoints + options.modSkillPoints,
-					modSkillCap: result.modSkillCap + options.modSkillCap,
-				};
-			},
-			{
-				modSkillPoints: 0,
-				modSkillCap: 0,
-			}
-		);
-
-		const values = Object.values(SYSTEM.SKILLS).map((cfg) => {
-			const skill = foundry.utils.deepClone(cfg);
-			skill.base = this.system.skills[skill.id].base;
-			skill.mod = skill.base;
-			skill.specialisations = this.system.skills[skill.id].specialisations;
-			return skill;
-		});
-
-		return {
-			maxPoints: defaultPoints + expDistinctions.modSkillPoints,
-			cap: defaultCap + expDistinctions.modSkillCap,
-			values,
 		};
 	}
 
@@ -177,6 +109,10 @@ export default class CharacterActor extends Actor {
 		else s = [];
 
 		this.update({ [`system.skills.${skill}.specialisations`]: s });
+	}
+
+	async transferAttrPoints(transfer = true) {
+		this.update({ 'system.transferPoints': transfer });
 	}
 
 	async editCondition(action = 'add', idx = 0) {

@@ -21,7 +21,7 @@ export default class DistinctionsConfig extends FormApplication {
 		});
 	}
 
-	async getData(options) {
+	async getData() {
 		const context = {
 			experienced: this.actor.distinctions.experienced,
 		};

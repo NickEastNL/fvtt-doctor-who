@@ -14,7 +14,6 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			...requiredInteger,
 			initial: 12,
 			min: 0,
-			positive: true,
 		});
 
 		schema.techLevel = new fields.NumberField({
@@ -83,14 +82,12 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		});
 
 		schema.homeworld = new fields.StringField();
-		// schema.distinctions = new fields.ArrayField(new fields.StringField());
-		// schema.experiences = new fields.ArrayField(new fields.StringField());
 		schema.conditions = new fields.ArrayField(new fields.StringField());
 
 		return schema;
 	}
 
-	points;
+	derivedPoints;
 
 	prepareBaseData() {
 		const parent = this.parent;
@@ -100,6 +97,14 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			modAttrCap: 0,
 			modSkillCap: 0,
 		};
+
+		const distinctionCost =
+			parent.itemTypes.distinction.length * SYSTEM.STORY_POINTS.DISTINCTION_COST;
+		let gadgetCost = 0;
+		Object.values(parent.itemTypes.gadget).forEach((g) => {
+			gadgetCost = g.system.distinctions.length;
+		});
+		const totalCost = distinctionCost + gadgetCost;
 
 		Object.values(parent.itemTypes.distinction).forEach((d) => {
 			const options = d.system.options;
@@ -117,9 +122,11 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		let skillPointsSpent = 0;
 		Object.values(this.skills).forEach((s) => {
 			skillPointsSpent += s.base;
+			skillPointsSpent += s.specialisations.length;
 		});
 
-		this.points = {
+		this.derivedPoints = {
+			storyPoints: SYSTEM.STORY_POINTS.BASE - totalCost,
 			attributes: {
 				cap: SYSTEM.ATTRIBUTE_RULES.DEFAULT_CAP + modifiers.modAttrCap,
 				pool: SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS + modifiers.modAttrPoints,
@@ -130,13 +137,24 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			},
 		};
 
-		this.points.attributes.available = this.points.attributes.pool - attributePointsSpent;
-		this.points.skills.available = this.points.skills.pool - skillPointsSpent;
+		this.derivedPoints.attributes.available =
+			this.derivedPoints.attributes.pool - attributePointsSpent;
+		this.derivedPoints.skills.available =
+			this.derivedPoints.skills.pool - skillPointsSpent;
 
 		// If true, transfer the available attribute points to skill points
-		if (this.transferPoints && this.points.attributes.available > 0) {
-			this.points.skills.available += this.points.attributes.available;
-			this.points.attributes.available = 0;
+		if (this.transferPoints && this.derivedPoints.attributes.available > 0) {
+			this.derivedPoints.skills.available += this.derivedPoints.attributes.available;
+			this.derivedPoints.attributes.available = 0;
+		}
+
+		if (
+			(this.transferPoints && this.derivedPoints.skills.available > 0) ||
+			this.derivedPoints.attributes.available > 0
+		) {
+			this.derivedPoints.canTransfer = true;
+		} else {
+			this.derivedPoints.canTransfer = false;
 		}
 	}
 }

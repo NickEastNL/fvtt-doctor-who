@@ -1,4 +1,5 @@
 export { default as DistinctionsConfig } from './config/distinctions.mjs';
+export { default as SkillConfig } from './config/skill.mjs';
 
 export { default as StatListDialog } from './dialogs/stat-list-dialog.mjs';
 

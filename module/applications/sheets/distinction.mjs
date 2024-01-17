@@ -3,8 +3,8 @@ export default class DistinctionSheet extends ItemSheet {
 		const options = super.defaultOptions;
 
 		return Object.assign(options, {
-			width: 600,
-			height: 400,
+			width: 500,
+			height: 300,
 			classes: [SYSTEM.id, 'sheet', 'item', this.itemType],
 			template: `systems/${SYSTEM.id}/templates/sheets/distinction.hbs`,
 			tabs: [
