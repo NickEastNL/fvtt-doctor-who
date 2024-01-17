@@ -1,0 +1,22 @@
+{
+	"env": {
+		"browser": true,
+		"es2022": true,
+		"node": true,
+		"jquery": true
+	},
+	"extends": "eslint:recommended",
+	"parserOptions": {
+		"requireConfigFile": false,
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"rules": {
+		"no-undef": "off",
+
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"linebreak-style": ["error", "unix"],
+		"quotes": ["error", "single"],
+		"semi": ["error", "always"]
+	}
+}

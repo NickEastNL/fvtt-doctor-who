@@ -1,0 +1,295 @@
+@use './variables.scss';
+
+.doctor-who.sheet {
+	--margin-size: 8px;
+	--font-size: 1rem;
+	--down-color: hsl(0, 50%, 25%);
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		margin: 0;
+		border: 0;
+	}
+
+	.window-content {
+		font-size: var(--font-size);
+
+		h1,
+		h2,
+		h3,
+		h4 {
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+
+	input[type='text'] {
+		height: initial;
+		padding: 0.2rem;
+	}
+
+	.sheet-header {
+		h1 input {
+			margin: 0;
+		}
+	}
+
+	.sheet-info {
+		margin-bottom: var(--margin-size);
+		padding-bottom: var(--margin-size);
+		border-bottom: 1px solid black;
+
+		.info-field {
+			&:not(:last-child) {
+				margin-bottom: 2px;
+			}
+
+			h4 {
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+		}
+
+		.focus {
+			span {
+				display: flex;
+				gap: 4px;
+			}
+		}
+
+		.homeworld {
+			gap: var(--margin-size);
+		}
+	}
+
+	img.profile {
+		flex: 0;
+		margin-right: var(--margin-size);
+	}
+
+	nav.sheet-tabs {
+		flex: none;
+	}
+
+	.title {
+		margin-bottom: 2px;
+		border-bottom: 1px solid black;
+
+		input {
+			height: 100%;
+			padding: 0 0.4rem;
+			background: none;
+			border: none;
+			font-size: inherit;
+			font-weight: bold;
+		}
+	}
+
+	.sheet-navigation {
+		flex: 0;
+		margin-bottom: var(--margin-size);
+		padding-bottom: var(--margin-size);
+		border-bottom: 1px solid black;
+	}
+
+	.sheet-header {
+		flex: 0;
+	}
+
+	.section-header {
+		flex: 0;
+		position: relative;
+		display: flex;
+		align-items: center;
+		text-align: center;
+
+		> span {
+			flex: 1;
+		}
+	}
+
+	.points-counter {
+		display: flex;
+		position: absolute;
+		right: 0;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.sheet-bottom {
+		padding-bottom: var(--margin-size);
+	}
+
+	.column-left {
+		flex: 1.1;
+		margin-right: var(--margin-size);
+		padding-right: var(--margin-size);
+		border-right: 1px solid black;
+	}
+
+	.column > *:not(:last-child) {
+		margin-bottom: var(--margin-size);
+		padding-bottom: var(--margin-size);
+		border-bottom: 1px solid black;
+	}
+
+	.stat-values {
+		gap: var(--margin-size);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.label {
+			font-size: var(--font-size);
+			font-weight: bold;
+			text-transform: uppercase;
+
+			&.down {
+				color: var(--down-color);
+				text-decoration: line-through;
+			}
+		}
+	}
+
+	.stat {
+		align-items: center;
+		gap: var(--margin-size);
+	}
+
+	.score {
+		display: inline-block;
+		flex: 0 0 28px;
+		width: 28px;
+		height: 28px;
+		border-radius: 3px;
+		font-size: 1rem;
+		line-height: 160%;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.attribute-damage {
+		display: flex;
+		align-items: center;
+		gap: 3px;
+
+		.pip {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			margin: 0;
+			border: 1px solid black;
+			border-radius: 8px;
+			text-align: center;
+			line-height: 1.1;
+			font-weight: bold;
+
+			&.full {
+				background-color: #444;
+			}
+
+			&.damage {
+				background-color: #999;
+			}
+
+			&.down {
+				color: var(--down-color);
+			}
+		}
+	}
+
+	.skill-specialisations {
+		flex: 2;
+		display: flex;
+		position: relative;
+		align-items: center;
+		height: 28px;
+		border: 1px solid black;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.stat-controls {
+		flex: 0;
+		height: 100%;
+	}
+
+	.stat-control {
+		margin: -2px 0;
+		text-align: center;
+
+		&.inactive {
+			color: #00000033;
+			pointer-events: none;
+		}
+	}
+
+	.badge-list {
+		list-style: none;
+		margin: 0;
+		padding: 0 3px;
+		gap: 3px;
+		align-items: center;
+		flex-wrap: nowrap;
+
+		.badge {
+			padding: 0 3px;
+			border: 1px solid #00000055;
+			border-radius: 3px;
+		}
+	}
+
+	.stat-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: var(--font-size);
+
+		&-label {
+			font-weight: bold;
+		}
+
+		&-item {
+			position: relative;
+		}
+	}
+
+	.story-points {
+		flex: 0.2;
+		margin-left: var(--margin-size);
+
+		&-counter {
+			gap: 0;
+
+			.input {
+				flex: 0 0 76px;
+				padding: var(--margin-size);
+				border-radius: 4px;
+				font-size: 3rem;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			.over-limit {
+				color: hsl(40, 60%, 30%);
+			}
+		}
+
+		&-base {
+			flex: 0;
+			text-align: center;
+		}
+	}
+
+	.list-options {
+		position: absolute;
+		right: 4px;
+		font-size: 80%;
+	}
+
+	a.list-edit {
+		font-size: 100%;
+	}
+}

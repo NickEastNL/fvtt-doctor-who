@@ -1,0 +1,24 @@
+@use './variables.scss';
+@use './dialog.scss';
+@use './sheet.scss';
+
+.doctor-who {
+	font-family: var(--font-body);
+
+	&.window-app {
+		overflow: hidden;
+		border-radius: 0;
+
+		.window-content {
+			background: #ddd;
+
+			> form {
+				height: 100%;
+			}
+		}
+	}
+
+	span.input {
+		border: 1px solid black;
+	}
+}

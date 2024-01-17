@@ -1,0 +1,43 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header">
+		<h1 class="title">
+			<input name="name" type="text" value="{{item.name}}" placeholder="Distinction Name" />
+		</h1>
+	</header>
+
+	<nav class="sheet-tabs tabs">
+		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="modifiers">Modifiers</a>
+	</nav>
+
+	<section class="tab sheet-body flexcol" data-tab="description">
+		{{editor description target="system.description" button=true engine="prosemirror"}}
+	</section>
+
+	<section class="tab sheet-body" data-tab="modifiers">
+		<div class="form-group">
+			<label>Attribute Points Modifier</label>
+			<input type="number" name="system.options.modAttrPoints" value="{{options.modAttrPoints}}" />
+		</div>
+
+		<div class="form-group">
+			<label>Skill Points Modifier</label>
+			<input type="number" name="system.options.modSkillPoints" value="{{options.modSkillPoints}}" />
+		</div>
+
+		<div class="form-group">
+			<label>Attribute Cap Modifier</label>
+			<input type="number" name="system.options.modAttrCap" value="{{options.modAttrCap}}" />
+		</div>
+
+		<div class="form-group">
+			<label>Skill Cap Modifier</label>
+			<input type="number" name="system.options.modSkillCap" value="{{options.modSkillCap}}" />
+		</div>
+
+		<div class="form-group">
+			<label>Damage Modifier</label>
+			<input type="number" name="system.options.modDamage" value="{{options.modDamage}}" />
+		</div>
+	</section>
+</form>

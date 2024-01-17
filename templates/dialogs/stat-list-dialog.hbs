@@ -1,0 +1,15 @@
+<form class="stat-list-dialog flexcol">
+	<header class="flexrow">
+		<h2>{{type}}</h2>
+	</header>
+
+	<section class="flexcol">
+		<div class="form-group">
+			<input type="text" name="value" value="{{value}}">
+		</div>
+
+		{{#if tooltip}}
+		<div>{{tooltip}}</div>
+		{{/if}}
+	</section>
+</form>

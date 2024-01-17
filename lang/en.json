@@ -1,0 +1,77 @@
+{
+	"TYPES": {
+		"Actor.character": "Character",
+
+		"Item.distinction": "Distinction",
+		"Item.equipment": "Equipment",
+		"Item.gadget": "Gadget"
+	},
+
+	"SHEETS": {
+		"CharacterSheet": "Character Sheet",
+		"DistinctionSheet": "Distinction Sheet",
+		"EquipmentSheet": "Equipment Sheet",
+		"GadgetSheet": "Gadget Sheet"
+	},
+
+	"DOCTORWHO": {
+		"StoryPoints": "Story Points"
+	},
+
+	"FOCUS": {
+		"Intensity.Normal": "Normal",
+		"Intensity.Strong": "Strong",
+		"Intensity.Intense": "Intense"
+	},
+
+	"ATTRIBUTES": {
+		"Awareness": "Awareness",
+		"Coordination": "Coordination",
+		"Ingenuity": "Ingenuity",
+		"Presence": "Presence",
+		"Resolve": "Resolve",
+		"Strength": "Strength"
+	},
+
+	"SKILLS": {
+		"Athletics": "Athletics",
+		"Conflict": "Conflict",
+		"Convince": "Convince",
+		"Craft": "Craft",
+		"Intuition": "Intuition",
+		"Knowledge": "Knowledge",
+		"Medicine": "Medicine",
+		"Science": "Science",
+		"Subterfuge": "Subterfuge",
+		"Survival": "Survival",
+		"Technology": "Technology",
+		"Transport": "Transport"
+	},
+
+	"CHARACTER": {
+		"Name": "Character Name",
+		"Concept": "Concept",
+		"Focus": "Focus",
+		"Homeworld": "Homeworld",
+		"TechLevel": "Tech Level",
+		"ShortGoal": "Short-Term Goal",
+		"LongGoal": "Long-Term Goal",
+		"Attributes": "Attributes",
+		"Skills": "Skills",
+		"Specialisations": "Specialisations",
+		"Distinctions": "Distinctions",
+		"Experiences": "Experiences",
+		"Equipment": "Equipment",
+		"Conditions": "Conditions"
+	},
+
+	"DIALOGS": {
+		"EditSpecialisations": "Edit Specialisations",
+		"SpecialDistinctionsTitle": "[{actor}] Special Distinctions",
+		"SpecialDistinctions": "Special Distinctions",
+		"AddDistinction": "Add Distinction",
+		"EditDistinction": "Edit Distinction",
+		"AddCondition": "Add Condition",
+		"EditCondition": "Edit Condition"
+	}
+}

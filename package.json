@@ -1,0 +1,18 @@
+{
+	"name": "doctor-who",
+	"version": "1.0.0",
+	"description": "Unofficial implementation of the Doctor Who Roleplaying Game for Foundry VTT",
+	"scripts": {
+		"sass": "sass styles/main.scss ./doctor-who.css",
+		"sass:watch": "sass --watch styles/main.scss ./doctor-who.css"
+	},
+	"author": "Nick van Oosten",
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/eslint-parser": "^7.23.3",
+		"@foundryvtt/foundryvtt-cli": "^1.0.2",
+		"eslint": "^8.56.0",
+		"eslint-plugin-jsdoc": "^48.0.2",
+		"sass": "^1.69.7"
+	}
+}

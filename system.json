@@ -1,0 +1,33 @@
+{
+	"id": "doctor-who",
+	"title": "Doctor Who The Roleplaying Game",
+	"description": "Unofficial implementation of the Doctor Who Roleplaying Game from Cubicle 7.",
+	"version": "1.0.0",
+	"authors": [
+		{
+			"name": "Nick van Oosten",
+			"discord": "NickEast"
+		}
+	],
+	"compatibility": {
+		"minimum": 11,
+		"verified": 11
+	},
+	"license": "LICENSE",
+	"esmodules": ["doctor-who.mjs"],
+	"styles": ["doctor-who.css"],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"socket": true,
+	"flags": {
+		"hotReload": {
+			"extensions": ["css", "json", "hbs"],
+			"path": ["lang", "module", "styles", "templates", "doctor-who.css"]
+		}
+	}
+}
