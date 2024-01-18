@@ -12,7 +12,7 @@ export default class SkillConfig extends FormApplication {
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			width: 350,
-			height: 500,
+			height: 300,
 			classes: ['doctor-who', 'sheet', 'skill'],
 			template: `systems/${SYSTEM.id}/templates/config/skill.hbs`,
 			resizable: false,
