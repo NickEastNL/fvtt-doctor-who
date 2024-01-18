@@ -88,22 +88,16 @@
 		<section class="column column-left flexcol">
 
 			{{!-- Attributes --}}
-			<div class="attributes-section">
+			<div class="stat-section attributes-section" data-type="attributes">
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
 					<div class="float-right">
-						<span class="stat-counter" data-tooltip="Available Points">{{attributes.availablePoints}}</span>
-						{{#if attributes.canTransfer}}
-						{{#if attributes.transferPoints}}
-						<a class="counter-transfer" data-tooltip="Return Skill Points" data-action="restoreAttrPoints">
-							<i class="fas fa-arrow-up"></i>
-						</a>
-						{{else}}
+						<span class="stat-counter" data-tooltip="Available Points: {{attributes.availablePoints}}<hr/>Transferred Points: {{attributes.transferredPoints}}">{{attributes.availablePoints}}</span>
+						{{#if attributes.hasPoints}}
 						<a class="counter-transfer" data-tooltip="Send to Skill Points" data-action="transferAttrPoints">
 							<i class="fas fa-arrow-down"></i>
 						</a>
-						{{/if}}
 						{{/if}}
 					</div>
 				</div>
@@ -141,12 +135,17 @@
 			</div>
 
 			{{!-- Skills --}}
-			<div class="skills-section">
+			<div class="stat-section skills-section" data-type="skills">
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Available Points">{{skills.availablePoints}}</span>
+						{{#if skills.canTransfer}}
+						<a class="counter-transfer" data-tooltip="Restore Attribute Points" data-action="restoreAttrPoints">
+							<i class="fas fa-arrow-up"></i>
+						</a>
+						{{/if}}
 					</div>
 				</div>
 
@@ -193,7 +192,7 @@
 			<div class="distinctions-section">
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Distinctions"}}</h2>
-					<a class="float-right" data-action="addDistinction">
+					<a class="button float-right" data-action="addDistinction">
 						<i class="far fa-circle-plus"></i>
 					</a>
 				</div>
@@ -203,7 +202,7 @@
 					<li class="list-item distinction" data-item-id="{{d._id}}">
 						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
 						<div>
-							<a data-action="deleteDistinction">
+							<a class="button" data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>
@@ -233,7 +232,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Equipment"}}</h2>
 
-					<a class="float-right">
+					<a class="button float-right">
 						<i class="far fa-circle-plus"></i>
 					</a>
 				</div>
@@ -244,7 +243,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Conditions"}}</h2>
 
-					<a class="float-right" data-action="addCondition">
+					<a class="button float-right" data-action="addCondition">
 						<i class="far fa-circle-plus"></i>
 					</a>
 				</div>
@@ -254,10 +253,10 @@
 					<li class="list-item condition" data-index="{{@index}}">
 						<span>{{c}}</span>
 						<div>
-							<a data-action="editCondition">
+							<a class="button" data-action="editCondition">
 								<i class="fas fa-pen-to-square"></i>
 							</a>
-							<a data-action="removeCondition">
+							<a class="button" data-action="deleteCondition">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>

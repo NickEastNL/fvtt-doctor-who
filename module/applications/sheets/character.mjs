@@ -39,7 +39,7 @@ export default class CharacterSheet extends ActorSheet {
 
 		context.conditions = actor.system.conditions;
 
-		console.log(context);
+		console.debug(context);
 
 		return context;
 	}
@@ -66,8 +66,7 @@ export default class CharacterSheet extends ActorSheet {
 		const result = {};
 		result.hasPoints = hasPoints;
 		result.availablePoints = availablePoints;
-		result.transferPoints = this.actor.system.transferPoints;
-		result.canTransfer = derivedPoints.canTransfer;
+		result.transferredPoints = this.actor.system.transferredPoints;
 		result.values = Object.values(SYSTEM.ATTRIBUTES).map((cfg) => {
 			const attribute = foundry.utils.deepClone(cfg);
 			attribute.base = source[attribute.id].base;
@@ -105,6 +104,7 @@ export default class CharacterSheet extends ActorSheet {
 		const result = {};
 		result.hasPoints = hasPoints;
 		result.availablePoints = availablePoints;
+		result.canTransfer = this.actor.system.transferredPoints > 0 && hasPoints;
 		result.values = Object.values(SYSTEM.SKILLS).map((cfg) => {
 			const skill = foundry.utils.deepClone(cfg);
 			skill.base = source[skill.id].base;
@@ -147,9 +147,9 @@ export default class CharacterSheet extends ActorSheet {
 
 			// Transfer Attribute Points
 			case 'transferAttrPoints':
-				return this.actor.transferAttrPoints();
+				return this.#transferAttrPoints(1);
 			case 'restoreAttrPoints':
-				return this.actor.transferAttrPoints(false);
+				return this.#transferAttrPoints(-1);
 
 			// Adjust Attribute
 			case 'attributeIncreaseBase': {
@@ -179,10 +179,6 @@ export default class CharacterSheet extends ActorSheet {
 				return new SkillConfig(this.actor, skillId).render(true);
 			}
 
-			// Edit Specialisations
-			case 'editSpecialisations':
-				return this.actor.editSpecialisations(b.closest('.skill').dataset.skill, 'edit');
-
 			// Modify Distinctions
 			case 'addDistinction': {
 				return this.#editDistinction();
@@ -203,11 +199,20 @@ export default class CharacterSheet extends ActorSheet {
 				const index = b.closest('.condition').dataset.index;
 				return this.actor.editCondition('edit', index);
 			}
-			case 'removeCondition': {
+			case 'deleteCondition': {
 				const index = b.closest('.condition').dataset.index;
-				return this.actor.editCondition('remove', index);
+				return this.actor.editCondition('delete', index);
 			}
 		}
+	}
+
+	async #transferAttrPoints(delta = 1) {
+		delta = Math.sign(delta);
+		const current = this.actor.system.transferredPoints;
+
+		if (!delta) return;
+
+		this.actor.update({ 'system.transferredPoints': current + delta });
 	}
 
 	async #editDistinction(action = 'add', itemId = null) {

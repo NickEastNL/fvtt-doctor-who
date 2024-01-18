@@ -29,7 +29,11 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			long: new fields.StringField(),
 		});
 
-		schema.transferPoints = new fields.BooleanField({ initial: false });
+		schema.transferredPoints = new fields.NumberField({
+			...requiredInteger,
+			initial: 0,
+			min: 0,
+		});
 
 		schema.attributes = new fields.SchemaField(
 			Object.values(SYSTEM.ATTRIBUTES).reduce((obj, attribute) => {
@@ -143,18 +147,22 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			this.derivedPoints.skills.pool - skillPointsSpent;
 
 		// If true, transfer the available attribute points to skill points
-		if (this.transferPoints && this.derivedPoints.attributes.available > 0) {
-			this.derivedPoints.skills.available += this.derivedPoints.attributes.available;
-			this.derivedPoints.attributes.available = 0;
+		if (
+			this.transferredPoints > 0 &&
+			this.derivedPoints.attributes.available >= this.transferredPoints
+		) {
+			this.derivedPoints.skills.available += this.transferredPoints;
+			this.derivedPoints.attributes.available -= this.transferredPoints;
 		}
 
-		if (
-			(this.transferPoints && this.derivedPoints.skills.available > 0) ||
-			this.derivedPoints.attributes.available > 0
-		) {
-			this.derivedPoints.canTransfer = true;
-		} else {
-			this.derivedPoints.canTransfer = false;
-		}
+		// if (
+		// 	(this.transferredPoints > 0 &&
+		// 		this.derivedPoints.skills.available >= this.transferredPoints) ||
+		// 	(this.transferredPoints > 0 && this.derivedPoints.attributes.available > 0)
+		// ) {
+		// 	this.derivedPoints.canTransfer = true;
+		// } else {
+		// 	this.derivedPoints.canTransfer = false;
+		// }
 	}
 }

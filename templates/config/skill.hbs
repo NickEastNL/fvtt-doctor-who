@@ -1,19 +1,50 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 	<header class="sheet-header flexrow">
 		<h1>{{config.label}}</h1>
-
-		<div class="purchase">
-			<span class="input score">{{skill.base}}</span>
-			<span class="input score">{{skillPoints}}</span>
-		</div>
 	</header>
 
 	<section class="sheet-body flexcol">
-		<h2>{{localize "CHARACTER.Specialisations"}}</h2>
+		<div class="skill-stats">
+			<div class="score">
+				<label>Score</label>
+				<span>{{skill.base}}</span>
+			</div>
 
-		<ol>
+			<div class="score">
+				<label>Available Points</label>
+				<span>{{skillPoints}}</span>
+			</div>
+		</div>
+
+		<div class="section-header">
+			<h2>{{localize "CHARACTER.Specialisations"}}</h2>
+
+			{{#if canAddSpecs}}
+			<a class="button float-right" data-action="addSpecialisation">
+				<i class="far fa-plus-circle"></i>
+			</a>
+			{{/if}}
+		</div>
+
+		<div class="tooltips">
+			{{#unless hasMinimumScore}}
+			<p>This Skill must be at least at <strong>3</strong> to be able to add Specialisations.</p>
+			{{/unless}}
+		</div>
+
+		<ol class="item-list">
 			{{#each skill.specialisations as |s|}}
-			<li>{{s}}</li>
+			<li class="list-item specialisation" data-index="{{@index}}">
+				<span>{{s}}</span>
+				<div>
+					<a class="button" data-action="editSpecialisation">
+						<i class="fas fa-pen-to-square"></i>
+					</a>
+					<a class="button" data-action="deleteSpecialisation">
+						<i class="far fa-circle-minus"></i>
+					</a>
+				</div>
+			</li>
 			{{/each}}
 		</ol>
 	</section>

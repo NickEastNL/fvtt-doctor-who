@@ -1,4 +1,3 @@
-import { StatListDialog } from '../applications/_module.mjs';
 import { SYSTEM } from '../config.mjs';
 
 export default class CharacterActor extends Actor {
@@ -111,37 +110,51 @@ export default class CharacterActor extends Actor {
 		this.update({ [`system.skills.${skill}.specialisations`]: s });
 	}
 
-	async transferAttrPoints(transfer = true) {
-		this.update({ 'system.transferPoints': transfer });
-	}
-
 	async editCondition(action = 'add', idx = 0) {
-		const conditions = this.system.conditions;
-		await this.#editStatItem(conditions, 'Condition', action, idx);
-		this.update({ 'system.conditions': conditions });
-	}
+		const conditions = foundry.utils.deepClone(this.system.conditions);
 
-	async #editStatItem(items, type = '', action = 'add', idx = 0) {
-		if (action === 'remove') {
-			items.splice(idx, 1);
+		if (action === 'delete') {
+			conditions.splice(idx, 1);
 		} else {
-			const options = {
-				name: this.name,
-				type,
-				action,
-				value: action === 'edit' ? items[idx] : '',
-			};
+			let title = '';
 
-			const response = await StatListDialog.prompt({
-				title: options.name,
-				options,
+			if (action === 'add') {
+				title = game.i18n.format('DIALOGS.AddCondition');
+			} else {
+				title = game.i18n.format('DIALOGS.EditCondition');
+			}
+
+			const html = await renderTemplate(
+				`systems/${SYSTEM.id}/templates/dialogs/edit-entry-dialog.hbs`,
+				{
+					title,
+					value: action === 'edit' ? conditions[idx] : '',
+				}
+			);
+
+			const response = await Dialog.prompt({
+				title: `[${this.name}] ${title}`,
+				content: html,
+				label: 'Confirm',
+				rejectClose: false,
+				callback: (html) => {
+					const form = html[0].querySelector('form');
+					const fd = new FormDataExtended(form);
+
+					return fd.object.value;
+				},
+				options: {
+					classes: ['doctor-who', 'sheet', 'dialog'],
+				},
 			});
 
 			if (action === 'edit') {
-				if (response?.value) items[idx] = response.value;
+				if (response) conditions[idx] = response;
 			} else {
-				if (response?.value) items.push(response.value);
+				if (response) conditions.push(response);
 			}
 		}
+
+		this.update({ 'system.conditions': conditions });
 	}
 }

@@ -1,0 +1,35 @@
+@use './variables.scss';
+
+.doctor-who.sheet.skill {
+	.skill-stats {
+		flex: none;
+		display: flex;
+		margin-bottom: var(--margin-size-normal);
+
+		.score {
+			flex: 1;
+			display: flex;
+			align-items: center;
+
+			label {
+				margin-right: var(--margin-size-normal);
+				font-weight: bold;
+			}
+
+			span {
+				display: inline-block;
+				flex: 0 0 32px;
+				padding: 0 4px;
+				border: 1px solid black;
+				border-radius: 4px;
+				font-size: 1.4rem;
+				font-weight: bold;
+				text-align: center;
+			}
+		}
+	}
+
+	.tooltips {
+		flex: none;
+	}
+}

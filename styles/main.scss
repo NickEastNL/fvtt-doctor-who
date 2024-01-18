@@ -6,9 +6,4 @@
 @use './item.scss';
 
 @use './dialog.scss';
-
-.doctor-who {
-	span.input {
-		border: 1px solid black;
-	}
-}
+@use './skill.scss';

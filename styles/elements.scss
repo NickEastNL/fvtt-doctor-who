@@ -27,9 +27,16 @@
 		align-items: center;
 	}
 
-	a:hover {
-		text-decoration: underline;
-		text-shadow: none;
+	a {
+		&:hover {
+			text-decoration: underline;
+			text-shadow: none;
+
+			&.button {
+				color: hsl(200, 30%, 50%);
+				text-decoration: none;
+			}
+		}
 	}
 
 	.tabs {

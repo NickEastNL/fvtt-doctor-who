@@ -182,32 +182,6 @@
 		}
 	}
 
-	// List of items
-	.item-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		font-size: var(--font-size);
-
-		&-label {
-			font-weight: bold;
-		}
-
-		.list-item {
-			display: flex;
-			position: relative;
-			align-items: center;
-
-			&:not(:last-child) {
-				margin-bottom: 4px;
-			}
-
-			> :first-child {
-				flex: 1;
-			}
-		}
-	}
-
 	.distinction {
 		.modifiers {
 			font-weight: bold;
