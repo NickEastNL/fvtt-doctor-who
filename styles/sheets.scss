@@ -1,0 +1,96 @@
+@use './variables.scss';
+
+.doctor-who.sheet {
+	.sheet-header {
+		flex: 0;
+
+		h1 input {
+			margin: 0;
+		}
+	}
+
+	.sheet-body {
+		align-items: stretch;
+	}
+
+	.form-group {
+		> * {
+			flex: 1;
+		}
+	}
+
+	.form-group-stacked {
+		flex-direction: column;
+		align-items: initial;
+	}
+
+	nav.sheet-tabs {
+		flex: none;
+	}
+
+	.title {
+		margin-bottom: 2px;
+		border-bottom: 1px solid black;
+
+		input {
+			height: 100%;
+			padding: 0 0.4rem;
+			background: none;
+			border: none;
+			font-size: inherit;
+			font-weight: bold;
+		}
+	}
+
+	.section-header {
+		flex: 0;
+		position: relative;
+		display: flex;
+		margin-bottom: var(--margin-size-normal);
+		align-items: center;
+		line-height: 1;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+
+		h2,
+		h3,
+		h4,
+		label {
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		&.flex-center {
+			justify-content: center;
+		}
+
+		&.flex-right {
+			justify-content: flex-end;
+		}
+
+		.float-right {
+			display: flex;
+			position: absolute;
+			right: 0;
+			align-items: center;
+			gap: 4px;
+
+			&.small {
+				font-size: 80%;
+			}
+		}
+
+		> span {
+			flex: 1;
+		}
+	}
+
+	.column {
+		> *:not(:last-child) {
+			margin-bottom: var(--margin-size-normal);
+			padding-bottom: var(--margin-size-normal);
+			border-bottom: 1px solid black;
+		}
+	}
+}

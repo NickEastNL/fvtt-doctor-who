@@ -1,6 +1,14 @@
 @use './variables.scss';
 
-.doctor-who.dialog {
+.doctor-who.sheet.dialog {
+	.sheet-header {
+		h1 {
+			font-size: 1.5em;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+
 	.title {
 		text-align: center;
 	}

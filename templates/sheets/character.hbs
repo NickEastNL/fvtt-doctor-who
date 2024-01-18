@@ -1,7 +1,7 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
 	{{!-- Core Character Info --}}
-	<section class="sheet-info flexcol">
+	<section class="actor-info flexcol">
 		<section class="flexrow">
 			<img class="profile" src="{{data.img}}" title="{{data.name}}" data-edit="img" width="179" height="179" />
 
@@ -10,30 +10,31 @@
 					<input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
 				</h1>
 
-				<div class="info-field">
-					<h4>{{localize "CHARACTER.Concept"}}</h4>
+				<div class="form-group form-group-stacked">
+					<label>{{localize "CHARACTER.Concept"}}</label>
 
 					<input name="system.concept" type="text" value="{{actor.system.concept}}" />
 				</div>
 
-				<div class="info-field focus">
+				<div class="form-group form-group-stacked focus">
 					<span>
-						<h4>{{localize "CHARACTER.Focus"}}</h4>
+						<label>{{localize "CHARACTER.Focus"}}</label>
 						<span>({{focus.intensity}})</span>
 					</span>
+
 
 					<input name="system.focus.name" type="text" value="{{focus.name}}" />
 				</div>
 
-				<div class="flexrow homeworld">
-					<div class="info-field">
-						<h4>{{localize "CHARACTER.Homeworld"}}</h4>
+				<div class="form-group homeworld">
+					<div class="form-group form-group-stacked">
+						<label>{{localize "CHARACTER.Homeworld"}}</label>
 
 						<input name="system.homeworld" type="text" value="{{actor.system.homeworld}}" />
 					</div>
 
-					<div class="info-field">
-						<h4>{{localize "CHARACTER.TechLevel"}}</h4>
+					<div class="form-group form-group-stacked">
+						<label>{{localize "CHARACTER.TechLevel"}}</label>
 
 						<input name="system.techLevel" type="number" value="{{actor.system.techLevel}}" step="1" min="1" max="12" />
 					</div>
@@ -42,17 +43,13 @@
 
 			{{!-- Story Points --}}
 			<div class="story-points flexcol">
-				<h2 class="section-header">
-					<span></span>
-					<label>{{localize "DOCTORWHO.StoryPoints"}}</label>
-					<span></span>
-				</h2>
+				<h2 class="section-header flex-center">{{localize "DOCTORWHO.StoryPoints"}}</h2>
 
 				<div class="flexrow story-points-counter stat">
 					<a class="stat-control {{#unless storyPoints.canDecrease}}inactive{{/unless}}" data-action="storyPointsDecrease">
 						<i class="fas fa-caret-left"></i>
 					</a>
-					<span class="input {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
+					<span class="stat-counter {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
 						{{storyPoints.current}}
 					</span>
 					<a class="stat-control" data-action="storyPointsIncrease">
@@ -63,20 +60,21 @@
 				<div class="story-points-base" data-tooltip="12 - Num Distinctions x 2">
 					Base:
 					{{storyPoints.base}}
-					/ 12</div>
+					/ 12
+				</div>
 			</div>
 		</section>
 
 		{{!-- Goals --}}
-		<section class="flexcol">
-			<div class="info-field">
-				<h4>{{localize "CHARACTER.ShortGoal"}}</h4>
+		<section>
+			<div class="form-group form-group-stacked">
+				<label>{{localize "CHARACTER.ShortGoal"}}</label>
 
 				<input name="system.goals.short" type="text" value="{{actor.system.goals.short}}" />
 			</div>
 
-			<div class="info-field">
-				<h4>{{localize "CHARACTER.LongGoal"}}</h4>
+			<div class="form-group form-group-stacked">
+				<label>{{localize "CHARACTER.LongGoal"}}</label>
 
 				<input name="system.goals.long" type="text" value="{{actor.system.goals.long}}" />
 			</div>
@@ -84,29 +82,25 @@
 	</section>
 
 	{{!-- Main Body --}}
-	<div class="sheet-bottom flexrow">
+	<div class="sheet-body flexrow">
 
 		{{!-- Left Column --}}
 		<section class="column column-left flexcol">
 
 			{{!-- Attributes --}}
 			<div class="attributes-section">
-				<div class="section-header">
-					<span></span>
-					<h2>
-						<label>{{localize "CHARACTER.Attributes"}}</label>
-					</h2>
-					<span></span>
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
-					<div class="points-counter">
-						<span class="input score" data-tooltip="Available Points">{{attributes.availablePoints}}</span>
+					<div class="float-right">
+						<span class="stat-counter" data-tooltip="Available Points">{{attributes.availablePoints}}</span>
 						{{#if attributes.canTransfer}}
 						{{#if attributes.transferPoints}}
-						<a class="" data-tooltip="Return Skill Points" data-action="restoreAttrPoints">
+						<a class="counter-transfer" data-tooltip="Return Skill Points" data-action="restoreAttrPoints">
 							<i class="fas fa-arrow-up"></i>
 						</a>
 						{{else}}
-						<a class="" data-tooltip="Send to Skill Points" data-action="transferAttrPoints">
+						<a class="counter-transfer" data-tooltip="Send to Skill Points" data-action="transferAttrPoints">
 							<i class="fas fa-arrow-down"></i>
 						</a>
 						{{/if}}
@@ -114,12 +108,10 @@
 					</div>
 				</div>
 
-				<ol class="stat-values flexcol">
+				<ol class="stats flexcol">
 					{{#each attributes.values as |attribute|}}
-					<li class="stat attribute flexrow" data-attribute="{{attribute.id}}">
-						<h4 class="label {{attribute.id}} {{#if attribute.down}}down{{/if}}">
-							{{attribute.label}}
-						</h4>
+					<li class="stat attribute {{attribute.id}} flexrow" data-attribute="{{attribute.id}}">
+						<label class="{{#if attribute.down}}down{{/if}}">{{attribute.label}}</label>
 						<div class="stat-controls flexcol">
 							<a class="stat-control {{#unless attribute.canIncreaseBase}}inactive{{/unless}}" title="Attribute Increase" data-action="attributeIncreaseBase">
 								<i class="fas fa-caret-up"></i>
@@ -128,7 +120,7 @@
 								<i class="fas fa-caret-down"></i>
 							</a>
 						</div>
-						<span class="input score" data-tooltip="Base {{attribute.label}}">{{attribute.base}}</span>
+						<span class="stat-counter" data-tooltip="Base {{attribute.label}}">{{attribute.base}}</span>
 
 						<div class="stat-controls flexcol">
 							<a class="stat-control {{#unless attribute.canIncreaseCur}}inactive{{/unless}}" title="Increase Current" data-action="attributeIncreaseCur">
@@ -138,13 +130,9 @@
 								<i class="fas fa-caret-down"></i>
 							</a>
 						</div>
-						<span class="attribute-damage" data-tooltip="Current {{attribute.label}}: {{attribute.current}}">
+						<span class="attribute-health" data-tooltip="Current {{attribute.label}}: {{attribute.current}}">
 							{{#each attribute.pips}}
-							{{#unless attribute.down}}
-							<span class="pip {{this}}"></span>
-							{{else}}
-							<span class="pip {{this}} down">X</span>
-							{{/unless}}
+							<span class="pip {{this}} {{#if attribute.down}}down{{/if}}">{{#if attribute.down}}X{{/if}}</span>
 							{{/each}}
 						</span>
 					</li>
@@ -154,29 +142,24 @@
 
 			{{!-- Skills --}}
 			<div class="skills-section">
-				<div class="section-header">
-					<span></span>
-					<h2>
-						<label>{{localize "CHARACTER.Skills"}}</label>
-					</h2>
-					<span></span>
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
-					<div class="points-counter">
-						<span class="input score" data-tooltip="Available Points">{{skills.availablePoints}}</span>
+					<div class="float-right">
+						<span class="stat-counter" data-tooltip="Available Points">{{skills.availablePoints}}</span>
 					</div>
 				</div>
 
-				<h4 class="section-header">
-					<span></span>
+				<h4 class="section-header flex-right">
 					<label>Specialisations</label>
 				</h4>
 
-				<ol class="stat-values flexcol">
+				<ol class="stats flexcol">
 					{{#each skills.values as |skill|}}
-					<li class="stat skill flexrow" data-skill="{{skill.id}}">
-						<h4 class="label {{skill.id}}">
+					<li class="stat skill {{skill.id}} flexrow" data-skill="{{skill.id}}">
+						<label>
 							<a data-action="skillConfig">{{skill.label}}</a>
-						</h4>
+						</label>
 						<div class="stat-controls flexcol">
 							<a class="stat-control {{#unless skill.canIncrease}}inactive{{/unless}}" title="Skill Increase" data-action="skillIncrease">
 								<i class="fas fa-caret-up"></i>
@@ -185,9 +168,9 @@
 								<i class="fas fa-caret-down"></i>
 							</a>
 						</div>
-						<span class="input score">
+						<span class="stat-counter">
 							{{#if skill.base}}
-							<span>{{skill.base}}</span>
+							{{skill.base}}
 							{{/if}}
 						</span>
 						<span class="skill-specialisations">
@@ -208,21 +191,19 @@
 
 			{{!-- Distinctions --}}
 			<div class="distinctions-section">
-				<h2 class="section-header">
-					<span></span>
-					<label>{{localize "CHARACTER.Distinctions"}}</label>
-					<span></span>
-					<a class="button list-options" data-action="addDistinction">
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Distinctions"}}</h2>
+					<a class="float-right" data-action="addDistinction">
 						<i class="far fa-circle-plus"></i>
 					</a>
-				</h2>
+				</div>
 
-				<ol class="stat-list">
+				<ol class="item-list">
 					{{#each distinctions as |d|}}
-					<li class="stat-list-item distinction" data-item-id="{{d._id}}">
-						<a class="button {{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
-						<div class="buttons">
-							<a class="button" data-action="deleteDistinction">
+					<li class="list-item distinction" data-item-id="{{d._id}}">
+						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
+						<div>
+							<a data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>
@@ -233,53 +214,50 @@
 
 			{{!-- Experiences --}}
 			<div class="experiences-section">
-				<h2 class="section-header">
-					<span></span>
-					<label>{{localize "CHARACTER.Experiences"}}</label>
-					<span></span>
-					<div class="buttons list-options">
-						<a class="button" data-action="experienceConfig">
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Experiences"}}</h2>
+
+					<div class="float-right">
+						<a class="button" data-action="configExperience">
 							<i class="fas fa-cog"></i>
 						</a>
 						<a class="button" data-action="addExperience">
 							<i class="far fa-circle-plus"></i>
 						</a>
 					</div>
-				</h2>
+				</div>
 			</div>
 
 			{{!-- Equipment --}}
 			<div class="equipment-section">
-				<h2 class="section-header">
-					<span></span>
-					<label>{{localize "CHARACTER.Equipment"}}</label>
-					<span></span>
-					<a class="button list-options">
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Equipment"}}</h2>
+
+					<a class="float-right">
 						<i class="far fa-circle-plus"></i>
 					</a>
-				</h2>
+				</div>
 			</div>
 
 			{{!-- Conditions --}}
 			<div class="conditions-section">
-				<h2 class="section-header">
-					<span></span>
-					<label>{{localize "CHARACTER.Conditions"}}</label>
-					<span></span>
-					<a class="button list-options" data-action="addCondition">
+				<div class="section-header flex-center">
+					<h2>{{localize "CHARACTER.Conditions"}}</h2>
+
+					<a class="float-right" data-action="addCondition">
 						<i class="far fa-circle-plus"></i>
 					</a>
-				</h2>
+				</div>
 
-				<ol class="stat-list">
+				<ol class="item-list">
 					{{#each conditions as |c|}}
-					<li class="stat-list-item condition" data-index="{{@index}}">
+					<li class="list-item condition" data-index="{{@index}}">
 						<span>{{c}}</span>
-						<div class="buttons">
-							<a class="button" data-action="editCondition">
+						<div>
+							<a data-action="editCondition">
 								<i class="fas fa-pen-to-square"></i>
 							</a>
-							<a class="button" data-action="removeCondition">
+							<a data-action="removeCondition">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>

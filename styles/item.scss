@@ -1,0 +1,7 @@
+@use './variables.scss';
+
+.doctor-who.sheet.item {
+	.form-group {
+		gap: var(--margin-size-normal);
+	}
+}

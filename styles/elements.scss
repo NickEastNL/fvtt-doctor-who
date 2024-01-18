@@ -1,0 +1,44 @@
+.doctor-who {
+	font-family: var(--font-body);
+
+	.window-content {
+		background: #ddd;
+		font-size: 1rem;
+
+		h2,
+		h3,
+		h4 {
+			margin: 0;
+			border: 0;
+		}
+	}
+
+	input[type='text'],
+	input[type='number'] {
+		height: initial;
+		padding: 0.2rem 0.3rem;
+	}
+
+	button {
+		font-family: inherit;
+	}
+
+	.flexrow {
+		align-items: center;
+	}
+
+	a:hover {
+		text-decoration: underline;
+		text-shadow: none;
+	}
+
+	.tabs {
+		.item {
+			&.active {
+				font-weight: bold;
+				text-shadow: none;
+				pointer-events: none;
+			}
+		}
+	}
+}

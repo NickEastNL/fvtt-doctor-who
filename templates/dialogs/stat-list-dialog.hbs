@@ -1,15 +1,22 @@
-<form class="stat-list-dialog flexcol">
-	<header class="flexrow">
-		<h2>{{type}}</h2>
+<div class="stat-list-dialog flexcol">
+	<header class="sheet-header flexrow">
+		<h1>{{type}}</h1>
 	</header>
 
-	<section class="flexcol">
+	<form class="dialog-content flexcol" autocomplete="off">
 		<div class="form-group">
-			<input type="text" name="value" value="{{value}}">
+			<input type="text" name="value" value="{{value}}" autofocus>
 		</div>
 
 		{{#if tooltip}}
 		<div>{{tooltip}}</div>
 		{{/if}}
-	</section>
-</form>
+	</form>
+
+	<div class="dialog-buttons">
+		<button class="dialog-button ok default bright" data-button="ok">
+			<i class="fas fa-check"></i>
+			Confirm
+		</button>
+	</div>
+</div>

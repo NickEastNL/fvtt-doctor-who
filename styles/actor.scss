@@ -1,0 +1,216 @@
+@use './variables.scss';
+
+.doctor-who.sheet.actor {
+	--down-color: hsl(0, 50%, 25%);
+
+	.actor-info {
+		margin-bottom: var(--margin-size-normal);
+		padding-bottom: var(--margin-size-normal);
+		border-bottom: 1px solid black;
+
+		.form-group {
+			margin: 0 0 2px 0;
+
+			label {
+				line-height: 1.1;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+		}
+
+		.focus {
+			> span {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
+		}
+
+		.homeworld {
+			gap: var(--margin-size-normal);
+		}
+	}
+
+	img.profile {
+		flex: 0;
+		margin-right: var(--margin-size-normal);
+	}
+
+	.column-left {
+		flex: 1.1;
+		margin-right: var(--margin-size-normal);
+		padding-right: var(--margin-size-normal);
+		border-right: 1px solid black;
+	}
+
+	.story-points {
+		flex: 0.2;
+		margin-left: var(--margin-size-normal);
+
+		&-counter {
+			align-items: center;
+			margin-bottom: var(--margin-size-normal);
+			gap: 0;
+
+			.stat-counter {
+				flex: 0 0 76px;
+				padding: var(--margin-size-normal);
+				border-radius: 4px;
+				font-size: 3rem;
+				line-height: normal;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			.over-limit {
+				color: hsl(40, 60%, 30%);
+			}
+		}
+
+		&-base {
+			flex: 0;
+			text-align: center;
+		}
+	}
+
+	// Stat control blocks
+	.stat-controls {
+		flex: 0;
+		height: 100%;
+	}
+
+	.stat-control {
+		margin: -2px 0;
+		text-align: center;
+
+		&.inactive {
+			color: #00000033;
+			pointer-events: none;
+		}
+	}
+
+	// Attribute and Skill lists
+	.stats {
+		gap: var(--margin-size-normal);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		label {
+			font-size: var(--font-size);
+			font-weight: bold;
+			text-transform: uppercase;
+
+			&.down {
+				color: var(--down-color);
+				text-decoration: line-through;
+			}
+		}
+
+		.stat {
+			align-items: center;
+			gap: var(--margin-size-normal);
+		}
+	}
+
+	.stat-counter {
+		display: inline-block;
+		flex: 0 0 28px;
+		width: 28px;
+		border: 1px solid black;
+		border-radius: 3px;
+		font-size: 1rem;
+		line-height: 160%;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	// Attribute health indicator
+	.attribute-health {
+		display: flex;
+		align-items: center;
+		gap: 3px;
+
+		.pip {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			margin: 0;
+			border: 1px solid black;
+			border-radius: 8px;
+			text-align: center;
+			line-height: 1;
+			font-weight: bold;
+
+			&.full {
+				background-color: #444;
+			}
+
+			&.damage {
+				background-color: #999;
+			}
+
+			&.down {
+				color: var(--down-color);
+			}
+		}
+	}
+
+	.skill-specialisations {
+		flex: 2;
+		display: flex;
+		position: relative;
+		align-items: center;
+		height: 28px;
+		border: 1px solid black;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+
+	.badge-list {
+		list-style: none;
+		margin: 0;
+		padding: 0 3px;
+		gap: 3px;
+		align-items: center;
+		flex-wrap: nowrap;
+
+		.badge {
+			padding: 0 3px;
+			border: 1px solid #00000055;
+			border-radius: 3px;
+		}
+	}
+
+	// List of items
+	.item-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: var(--font-size);
+
+		&-label {
+			font-weight: bold;
+		}
+
+		.list-item {
+			display: flex;
+			position: relative;
+			align-items: center;
+
+			&:not(:last-child) {
+				margin-bottom: 4px;
+			}
+
+			> :first-child {
+				flex: 1;
+			}
+		}
+	}
+
+	.distinction {
+		.modifiers {
+			font-weight: bold;
+		}
+	}
+}

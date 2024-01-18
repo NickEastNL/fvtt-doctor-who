@@ -7,7 +7,7 @@ export default class CharacterSheet extends ActorSheet {
 		return Object.assign(options, {
 			width: 800,
 			height: 750,
-			classes: [SYSTEM.id, 'sheet', 'actor', this.actorType],
+			classes: [SYSTEM.id, 'sheet', 'actor', 'character'],
 			template: `systems/${SYSTEM.id}/templates/sheets/character.hbs`,
 			resizable: false,
 			tabs: [
@@ -184,29 +184,33 @@ export default class CharacterSheet extends ActorSheet {
 				return this.actor.editSpecialisations(b.closest('.skill').dataset.skill, 'edit');
 
 			// Modify Distinctions
-			case 'addDistinction':
+			case 'addDistinction': {
 				return this.#editDistinction();
-			case 'editDistinction':
-				return this.#editDistinction('edit', b);
-			case 'deleteDistinction':
-				return this.#editDistinction('delete', b);
+			}
+			case 'editDistinction': {
+				const itemId = b.closest('.distinction').dataset.itemId;
+				return this.#editDistinction('edit', itemId);
+			}
+			case 'deleteDistinction': {
+				const itemId = b.closest('.distinction').dataset.itemId;
+				return this.#editDistinction('delete', itemId);
+			}
 
 			// Modify Conditions
 			case 'addCondition':
 				return this.actor.editCondition();
 			case 'editCondition': {
-				const index = b.closest('.stat-list-item').dataset.index;
+				const index = b.closest('.condition').dataset.index;
 				return this.actor.editCondition('edit', index);
 			}
 			case 'removeCondition': {
-				const index = b.closest('.stat-list-item').dataset.index;
+				const index = b.closest('.condition').dataset.index;
 				return this.actor.editCondition('remove', index);
 			}
 		}
 	}
 
-	async #editDistinction(action = 'add', button = null) {
-		const itemId = button?.closest('.stat-list-item').dataset.itemId;
+	async #editDistinction(action = 'add', itemId = null) {
 		const item = this.actor.items.get(itemId);
 		const name = game.i18n.format('DOCUMENT.New', {
 			type: game.i18n.format('TYPES.Item.distinction'),
