@@ -17,10 +17,24 @@ export default class GadgetSheet extends ItemSheet {
 
 		data.item = item;
 		data.description = item.system.description;
-		data.storyPoints = item.system.storyPoints;
+		data.storyPoints = this.#formatStoryPoints();
 		data.distinctions = item.system.distinctions;
 
 		return data;
+	}
+
+	#formatStoryPoints() {
+		const storyPoints = this.item.system.storyPoints;
+		const maxPoints = this.item.system.maxStoryPoints;
+		const points = {
+			max: maxPoints,
+			current: storyPoints,
+		};
+
+		if (points.current > 0) points.canDecrease = true;
+		if (points.current < points.max) points.canIncrease = true;
+
+		return points;
 	}
 
 	activateListeners(html) {
@@ -29,6 +43,13 @@ export default class GadgetSheet extends ItemSheet {
 			event.preventDefault();
 			const b = event.currentTarget;
 			switch (b.dataset.action) {
+				// Adjust Story Points
+				case 'storyPointsIncrease':
+					return this.#updateStoryPoints(1);
+				case 'storyPointsDecrease':
+					return this.#updateStoryPoints(-1);
+
+				// Modify Distinctions
 				case 'addDistinction':
 					return this.#editDistinction();
 				case 'editDistinction': {
@@ -41,6 +62,14 @@ export default class GadgetSheet extends ItemSheet {
 				}
 			}
 		});
+	}
+
+	async #updateStoryPoints(delta = 1) {
+		delta = Math.sign(delta);
+		const p = this.item.system.storyPoints;
+
+		if (!delta) return;
+		this.item.update({ 'system.storyPoints': p + delta });
 	}
 
 	async #editDistinction(action = 'add', idx = 0) {
@@ -81,7 +110,10 @@ export default class GadgetSheet extends ItemSheet {
 			}
 		}
 
-		this.item.update({ 'system.distinctions': distinctions });
+		this.item.update({
+			'system.distinctions': distinctions,
+			'system.storyPoints': distinctions.length,
+		});
 	}
 
 	async #showDistinctionConfig(distinction, idx) {

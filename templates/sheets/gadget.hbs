@@ -21,8 +21,16 @@
 
 			<div class="score-header">
 				<div class="score">
-					<label>Story Points</label>
-					<span>{{storyPoints}}</span>
+					<label>Story Points (Max {{storyPoints.max}})</label>
+					<a class="stat-control {{#unless storyPoints.canDecrease}}inactive{{/unless}}" data-action="storyPointsDecrease">
+						<i class="fas fa-caret-left"></i>
+					</a>
+					<span class="stat-counter {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
+						{{storyPoints.current}}
+					</span>
+					<a class="stat-control {{#unless storyPoints.canIncrease}}inactive{{/unless}}" data-action="storyPointsIncrease">
+						<i class="fas fa-caret-right"></i>
+					</a>
 				</div>
 			</div>
 

@@ -73,22 +73,6 @@
 		}
 	}
 
-	// Stat control blocks
-	.stat-controls {
-		flex: 0;
-		height: 100%;
-	}
-
-	.stat-control {
-		margin: -2px 0;
-		text-align: center;
-
-		&.inactive {
-			color: #00000033;
-			pointer-events: none;
-		}
-	}
-
 	// Attribute and Skill lists
 	.stats {
 		gap: var(--margin-size-normal);

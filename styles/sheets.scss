@@ -111,6 +111,22 @@
 		}
 	}
 
+	// Stat control blocks
+	.stat-controls {
+		flex: 0;
+		height: 100%;
+	}
+
+	.stat-control {
+		margin: -2px 0;
+		text-align: center;
+
+		&.inactive {
+			color: #00000033;
+			pointer-events: none;
+		}
+	}
+
 	.score {
 		display: flex;
 		align-items: center;
