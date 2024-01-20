@@ -1,15 +1,14 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 	<header class="sheet-header">
 		<h1>{{config.label}}</h1>
+
+		<div class="float-right score">
+			<span>{{skill.base}}</span>
+		</div>
 	</header>
 
 	<section class="sheet-body flexcol">
 		<div class="skill-stats">
-			<div class="score">
-				<label>Score</label>
-				<span>{{skill.base}}</span>
-			</div>
-
 			{{#unless isUnlocked}}
 			<div class="score">
 				<label>Available Points</label>

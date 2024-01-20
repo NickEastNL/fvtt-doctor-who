@@ -41,7 +41,8 @@ export default class EmbeddedObjectConfig extends FormApplication {
 		const objects = foundry.utils.deepClone(this.parent.system[this.objectCollection]);
 
 		if (formData.name) this.object.name = formData.name;
-		if (formData.description) this.object.description = formData.description;
+		if (formData.description !== undefined)
+			this.object.description = formData.description;
 
 		objects[this.objectId] = this.object;
 		this.parent.update({ [`system.${this.objectCollection}`]: objects });

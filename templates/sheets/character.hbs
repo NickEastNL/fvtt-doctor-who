@@ -219,7 +219,7 @@
 				<ol class="item-list">
 					{{#each distinctions as |d|}}
 					<li class="list-item distinction" data-item-id="{{d._id}}">
-						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
+						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction" data-tooltip="{{d.system.description}}">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
 						<div>
 							<a class="button" data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
@@ -259,7 +259,7 @@
 				<ol class="item-list">
 					{{#each equipment.equipment as |equipment|}}
 					<li class="list-item equipment" data-item-id="{{@index}}" data-type="equipment">
-						<a data-action="editEquipment">
+						<a data-action="editEquipment" data-tooltip="{{equipment.description}}">
 							<i class="fas fa-backpack"></i>
 							<span>{{equipment.name}}</span>
 						</a>
@@ -273,7 +273,7 @@
 
 					{{#each equipment.gadgets as |gadget|}}
 					<li class="list-item gadget" data-item-id="{{gadget._id}}" data-type="gadget">
-						<a data-action="editEquipment">
+						<a data-action="editEquipment" data-tooltip="{{gadget.system.description}}">
 							<i class="fas fa-wrench"></i>
 							<span>{{gadget.name}}</span>
 						</a>
@@ -287,7 +287,7 @@
 
 					{{#each equipment.weapons as |weapon|}}
 					<li class="list-item weapon" data-item-id="{{weapon._id}}" data-type="weapon">
-						<a data-action="editEquipment">
+						<a data-action="editEquipment" data-tooltip="{{weapon.system.description}}">
 							<i class="fas fa-raygun"></i>
 							<span>{{weapon.name}}</span>
 							<span class="weapon-damage">({{{weapon.system.damageLabel}}})</span>
