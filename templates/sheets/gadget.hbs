@@ -1,0 +1,43 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header">
+		<h1 class="title">
+			<input name="name" type="text" value="{{item.name}}" placeholder="Equipment Name" />
+		</h1>
+	</header>
+
+	<section class="sheet-body flexcol">
+		<div class="editor-section flexcol">
+			{{editor description target="system.description" button=true engine="prosemirror"}}
+		</div>
+
+		<div class="flexcol">
+			<div class="section-header flex-center">
+				<h2>{{localize "CHARACTER.Distinctions"}}</h2>
+
+				<a class="button float-right" data-action="addDistinction">
+					<i class="far fa-circle-plus"></i>
+				</a>
+			</div>
+
+			<div class="score-header">
+				<div class="score">
+					<label>Story Points</label>
+					<span>{{storyPoints}}</span>
+				</div>
+			</div>
+
+			<ol class="item-list">
+				{{#each distinctions as |d|}}
+				<li class="list-item distinction" data-index="{{@index}}">
+					<a data-action="editDistinction" data-tooltip="{{d.description}}">{{d.name}}</a>
+					<div>
+						<a class="button" data-action="deleteDistinction">
+							<i class="far fa-circle-minus"></i>
+						</a>
+					</div>
+				</li>
+				{{/each}}
+			</ol>
+		</div>
+	</section>
+</form>

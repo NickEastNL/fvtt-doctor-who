@@ -13,6 +13,19 @@
 		}
 	}
 
+	.dialog-content {
+		display: flex;
+		flex-direction: column;
+
+		form {
+			flex: 1;
+		}
+	}
+
+	.dialog-buttons {
+		flex: none;
+	}
+
 	input[type='text'],
 	input[type='number'] {
 		height: initial;
@@ -25,6 +38,14 @@
 
 	.flexrow {
 		align-items: center;
+	}
+
+	.flex-center {
+		justify-content: center;
+	}
+
+	.flex-right {
+		justify-content: flex-end;
 	}
 
 	a {

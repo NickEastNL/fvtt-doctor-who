@@ -5,6 +5,7 @@
 		</h1>
 	</header>
 
+	{{#unless isConfig}}
 	<nav class="sheet-tabs tabs">
 		<a class="item" data-tab="description">Description</a>
 		<a class="item" data-tab="modifiers">Modifiers</a>
@@ -17,27 +18,32 @@
 	<section class="tab sheet-body" data-tab="modifiers">
 		<div class="form-group">
 			<label>Attribute Points Modifier</label>
-			<input type="number" name="system.options.modAttrPoints" value="{{options.modAttrPoints}}" />
+			<input type="number" name="system.options.modAttrPoints" value="{{options.modAttrPoints}}" {{#unless isGM}}disabled{{/unless}} />
 		</div>
 
 		<div class="form-group">
 			<label>Skill Points Modifier</label>
-			<input type="number" name="system.options.modSkillPoints" value="{{options.modSkillPoints}}" />
+			<input type="number" name="system.options.modSkillPoints" value="{{options.modSkillPoints}}" {{#unless isGM}}disabled{{/unless}} />
 		</div>
 
 		<div class="form-group">
 			<label>Attribute Cap Modifier</label>
-			<input type="number" name="system.options.modAttrCap" value="{{options.modAttrCap}}" />
+			<input type="number" name="system.options.modAttrCap" value="{{options.modAttrCap}}" {{#unless isGM}}disabled{{/unless}} />
 		</div>
 
 		<div class="form-group">
 			<label>Skill Cap Modifier</label>
-			<input type="number" name="system.options.modSkillCap" value="{{options.modSkillCap}}" />
+			<input type="number" name="system.options.modSkillCap" value="{{options.modSkillCap}}" {{#unless isGM}}disabled{{/unless}} />
 		</div>
 
 		<div class="form-group">
 			<label>Damage Modifier</label>
-			<input type="number" name="system.options.modDamage" value="{{options.modDamage}}" />
+			<input type="number" name="system.options.modDamage" value="{{options.modDamage}}" {{#unless isGM}}disabled{{/unless}} />
 		</div>
 	</section>
+	{{else}}
+	<section class="tab sheet-body flexcol">
+		{{editor description target="description" button=true engine="prosemirror"}}
+	</section>
+	{{/unless}}
 </form>

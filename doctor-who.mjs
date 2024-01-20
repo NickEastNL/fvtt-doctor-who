@@ -31,12 +31,18 @@ Hooks.once('init', async function () {
 
 	CONFIG.Item.dataModels = {
 		distinction: models.DistinctionModel,
+		gadget: models.GadgetModel,
 	};
 
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet(SYSTEM.id, applications.DistinctionSheet, {
 		types: ['distinction'],
 		label: 'SHEETS.DistinctionSheet',
+		makeDefault: true,
+	});
+	Items.registerSheet(SYSTEM.id, applications.GadgetSheet, {
+		types: ['gadget'],
+		label: 'SHEETS.GadgetSheet',
 		makeDefault: true,
 	});
 });

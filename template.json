@@ -1,12 +1,8 @@
 {
 	"Actor": {
-		"types": ["character"],
-		"character": {}
+		"types": ["character"]
 	},
 	"Item": {
-		"types": ["distinction", "equipment", "gadget"],
-		"distinction": {},
-		"equipmenet": {},
-		"gadget": {}
+		"types": ["distinction", "gadget"]
 	}
 }

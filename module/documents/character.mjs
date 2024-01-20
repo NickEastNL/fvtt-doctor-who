@@ -14,7 +14,11 @@ export default class CharacterActor extends Actor {
 		const items = this.itemTypes;
 
 		this.distinctions = items.distinction;
-		this.gadgets = items.gadget;
+		this.equipment = {
+			equipment: items.equipment,
+			gadgets: items.gadget,
+			weapons: items.weapon,
+		};
 	}
 
 	prepareDerivedData() {
@@ -27,7 +31,7 @@ export default class CharacterActor extends Actor {
 			this.distinctions.length * SYSTEM.STORY_POINTS.DISTINCTION_COST;
 
 		let gadgetCost = 0;
-		this.gadgets.forEach((g) => {
+		this.equipment.gadgets.forEach((g) => {
 			gadgetCost = g.system.distinctions.length;
 		});
 
@@ -144,7 +148,7 @@ export default class CharacterActor extends Actor {
 					return fd.object.value;
 				},
 				options: {
-					classes: ['doctor-who', 'sheet', 'dialog'],
+					classes: [SYSTEM.id, 'sheet', 'dialog'],
 				},
 			});
 

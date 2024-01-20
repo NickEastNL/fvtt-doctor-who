@@ -4,10 +4,22 @@
 	<section class="actor-info flexcol">
 		<section class="flexrow">
 			<img class="profile" src="{{data.img}}" title="{{data.name}}" data-edit="img" width="179" height="179" />
-
+			{{log this}}
 			<section>
 				<h1 class="title">
 					<input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
+
+					{{#if isGM}}
+					{{#if unlockLimits}}
+					<a class="button" data-tooltip="Unlock Limitations" data-action="unlockLimits">
+						<i class="fas fa-lock-open"></i>
+					</a>
+					{{else}}
+					<a class="button" data-tooltip="Lock Limitations" data-action="unlockLimits">
+						<i class="fas fa-lock"></i>
+					</a>
+					{{/if}}
+					{{/if}}
 				</h1>
 
 				<div class="form-group form-group-stacked">
@@ -92,6 +104,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
+					{{#unless unlockLimits}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Available Points: {{attributes.availablePoints}}<hr/>Transferred Points: {{attributes.transferredPoints}}">{{attributes.availablePoints}}</span>
 						{{#if attributes.hasPoints}}
@@ -100,6 +113,7 @@
 						</a>
 						{{/if}}
 					</div>
+					{{/unless}}
 				</div>
 
 				<ol class="stats flexcol">
@@ -139,6 +153,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
+					{{#unless unlockLimits}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Available Points">{{skills.availablePoints}}</span>
 						{{#if skills.canTransfer}}
@@ -147,6 +162,7 @@
 						</a>
 						{{/if}}
 					</div>
+					{{/unless}}
 				</div>
 
 				<h4 class="section-header flex-right">
@@ -192,9 +208,12 @@
 			<div class="distinctions-section">
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Distinctions"}}</h2>
+
+					{{#unless maxDistinctions}}
 					<a class="button float-right" data-action="addDistinction">
 						<i class="far fa-circle-plus"></i>
 					</a>
+					{{/unless}}
 				</div>
 
 				<ol class="item-list">
@@ -236,6 +255,47 @@
 						<i class="far fa-circle-plus"></i>
 					</a>
 				</div>
+
+				<ol class="item-list">
+					{{#each equipment.gadgets as |gadget|}}
+					<li class="list-item gadget" data-item-id="{{gadget._id}}" data-type="gadget">
+						<a data-action="editEquipment">
+							<i class="fas fa-wrench"></i>
+							<span>{{gadget.name}}</span>
+						</a>
+						<div>
+							<a class="button" data-action="deleteEquipment">
+								<i class="far fa-circle-minus"></i>
+							</a>
+						</div>
+					</li>
+					{{/each}}
+
+					{{#each equipment.weapons as |weapon|}}
+					<li class="list-item weapon" data-item-id="{{weapon._id}}" data-type="weapon">
+						<a data-action="editEquipment">
+							<i class="fas fa-wrench"></i>
+							<span>{{weapon.name}}</span>
+						</a>
+						<div>
+							<a class="button" data-action="deleteEquipment">
+								<i class="far fa-circle-minus"></i>
+							</a>
+						</div>
+					</li>
+					{{/each}}
+
+					{{#each equipment.equipment as |equipment|}}
+					<li class="list-item equipment" data-item-id="{{equipment._id}}" data-type="equipment">
+						<a data-action="editEquipment">{{equipment.name}}</a>
+						<div>
+							<a class="button" data-action="deleteEquipment">
+								<i class="far fa-circle-minus"></i>
+							</a>
+						</div>
+					</li>
+					{{/each}}
+				</ol>
 			</div>
 
 			{{!-- Conditions --}}

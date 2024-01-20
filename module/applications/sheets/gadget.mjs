@@ -1,0 +1,91 @@
+import { GadgetDistinctionConfig } from '../_module.mjs';
+
+export default class GadgetSheet extends ItemSheet {
+	static get defaultOptions() {
+		return Object.assign(super.defaultOptions, {
+			width: 500,
+			height: 400,
+			classes: [SYSTEM.id, 'sheet', 'item', 'gadget'],
+			template: `systems/${SYSTEM.id}/templates/sheets/gadget.hbs`,
+			resizable: false,
+		});
+	}
+
+	async getData(options = {}) {
+		const data = super.getData(options);
+		const item = this.item;
+
+		data.item = item;
+		data.description = item.system.description;
+		data.storyPoints = item.system.storyPoints;
+		data.distinctions = item.system.distinctions;
+
+		return data;
+	}
+
+	activateListeners(html) {
+		super.activateListeners(html);
+		html.find('[data-action]').click((event) => {
+			event.preventDefault();
+			const b = event.currentTarget;
+			switch (b.dataset.action) {
+				case 'addDistinction':
+					return this.#editDistinction();
+				case 'editDistinction': {
+					const index = b.closest('.distinction').dataset.index;
+					return this.#editDistinction('edit', index);
+				}
+				case 'deleteDistinction': {
+					const index = b.closest('.distinction').dataset.index;
+					return this.#editDistinction('delete', index);
+				}
+			}
+		});
+	}
+
+	async #editDistinction(action = 'add', idx = 0) {
+		const distinctions = foundry.utils.deepClone(this.item.system.distinctions);
+		const newDistinction = {
+			name: 'New Distinction',
+			description: '',
+		};
+
+		switch (action) {
+			case 'add': {
+				const newLength = distinctions.push(newDistinction);
+				this.#showDistinctionConfig(newDistinction, newLength - 1);
+				break;
+			}
+			case 'edit': {
+				const distinction = distinctions[idx];
+				return this.#showDistinctionConfig(distinction, idx);
+			}
+			case 'delete': {
+				const response = await Dialog.confirm({
+					title: 'Delete Distinction',
+					content:
+						'<p>Are You Sure?</p><p>This Distinction will be permanently deleted and cannot be recovered.</p>',
+					defaultYes: false,
+					yes: () => {},
+					options: {
+						classes: [SYSTEM.id, 'sheet', 'dialog'],
+					},
+				});
+
+				if (response) {
+					distinctions.splice(idx, 1);
+					break;
+				} else {
+					return;
+				}
+			}
+		}
+
+		this.item.update({ 'system.distinctions': distinctions });
+	}
+
+	async #showDistinctionConfig(distinction, idx) {
+		const sheet = new GadgetDistinctionConfig(this.item, distinction, idx);
+		sheet.render(true);
+	}
+}
