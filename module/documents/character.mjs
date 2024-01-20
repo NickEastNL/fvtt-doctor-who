@@ -15,7 +15,6 @@ export default class CharacterActor extends Actor {
 
 		this.distinctions = items.distinction;
 		this.equipment = {
-			equipment: items.equipment,
 			gadgets: items.gadget,
 			weapons: items.weapon,
 		};
@@ -23,6 +22,7 @@ export default class CharacterActor extends Actor {
 
 	prepareDerivedData() {
 		this.storyPoints = this._prepareStoryPoints();
+		this.equipment.equipment = this.system.equipment;
 	}
 
 	_prepareStoryPoints() {

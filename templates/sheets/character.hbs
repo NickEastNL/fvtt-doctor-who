@@ -251,12 +251,26 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Equipment"}}</h2>
 
-					<a class="button float-right">
+					<a class="button float-right" data-action="addEquipment">
 						<i class="far fa-circle-plus"></i>
 					</a>
 				</div>
 
 				<ol class="item-list">
+					{{#each equipment.equipment as |equipment|}}
+					<li class="list-item equipment" data-item-id="{{@index}}" data-type="equipment">
+						<a data-action="editEquipment">
+							<i class="fas fa-backpack"></i>
+							<span>{{equipment.name}}</span>
+						</a>
+						<div>
+							<a class="button" data-action="deleteEquipment">
+								<i class="far fa-circle-minus"></i>
+							</a>
+						</div>
+					</li>
+					{{/each}}
+
 					{{#each equipment.gadgets as |gadget|}}
 					<li class="list-item gadget" data-item-id="{{gadget._id}}" data-type="gadget">
 						<a data-action="editEquipment">
@@ -278,17 +292,6 @@
 							<span>{{weapon.name}}</span>
 							<span class="weapon-damage">({{{weapon.system.damageLabel}}})</span>
 						</a>
-						<div>
-							<a class="button" data-action="deleteEquipment">
-								<i class="far fa-circle-minus"></i>
-							</a>
-						</div>
-					</li>
-					{{/each}}
-
-					{{#each equipment.equipment as |equipment|}}
-					<li class="list-item equipment" data-item-id="{{equipment._id}}" data-type="equipment">
-						<a data-action="editEquipment">{{equipment.name}}</a>
 						<div>
 							<a class="button" data-action="deleteEquipment">
 								<i class="far fa-circle-minus"></i>

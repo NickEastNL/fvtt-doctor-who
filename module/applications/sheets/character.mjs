@@ -1,4 +1,4 @@
-import { SkillConfig } from '../_module.mjs';
+import { EmbeddedObjectConfig, SkillConfig } from '../_module.mjs';
 
 export default class CharacterSheet extends ActorSheet {
 	static get defaultOptions() {
@@ -206,8 +206,7 @@ export default class CharacterSheet extends ActorSheet {
 
 			// Modify Equipment
 			case 'addEquipment': {
-				// return this.#editEquipment('add', type);
-				break;
+				return this.#editEquipment('add');
 			}
 			case 'editEquipment': {
 				const dataset = b.closest('.list-item').dataset;
@@ -265,31 +264,107 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	async #editEquipment(action = 'add', type = 'equipment', itemId = null) {
-		if (type === 'equipment') {
-			return;
-		} else {
-			const item = this.actor.items.get(itemId);
+		const equipment = foundry.utils.deepClone(this.actor.system.equipment);
+		const item = this.actor.items.get(itemId);
+
+		const createEquipment = async () => {
+			const newEquipment = {
+				name: 'New Equipment',
+			};
+
+			const newLength = equipment.push(newEquipment);
+
+			await this.actor.update({ 'system.equipment': equipment });
+			this.#showEquipmenConfig(newEquipment, newLength - 1);
+		};
+
+		const createItem = (newType) => {
 			const name = game.i18n.format('DOCUMENT.New', {
-				type: game.i18n.format(`TYPES.Item.${type}`),
+				type: game.i18n.format(`TYPES.Item.${newType}`),
 			});
 
-			switch (action) {
-				case 'add':
-					return Item.create(
-						{
-							name,
-							type,
+			return Item.create(
+				{
+					name,
+					type: newType,
+				},
+				{
+					parent: this.actor,
+					renderSheet: true,
+				}
+			);
+		};
+
+		switch (action) {
+			case 'add': {
+				const d = new Dialog(
+					{
+						title: 'Create Equipment',
+						buttons: {
+							equipment: {
+								icon: '<i class="fas fa-backpack"></i>',
+								label: game.i18n.localize('TYPES.Item.equipment'),
+								callback: () => createEquipment(),
+							},
+							gadget: {
+								icon: '<i class="fas fa-wrench"></i>',
+								label: game.i18n.localize('TYPES.Item.gadget'),
+								callback: () => createItem('gadget'),
+							},
+							weapon: {
+								icon: '<i class="fas fa-raygun"></i>',
+								label: game.i18n.localize('TYPES.Item.weapon'),
+								callback: () => createItem('weapon'),
+							},
 						},
-						{
-							parent: this.actor,
-							renderSheet: true,
-						}
-					);
-				case 'edit':
+					},
+					{ classes: [SYSTEM.id, 'sheet', 'dialog'], rejectClose: false }
+				);
+				d.render(true);
+				return;
+			}
+			case 'edit':
+				if (type !== 'equipment') {
 					return item?.sheet.render(true);
-				case 'delete':
+				} else {
+					const object = equipment[itemId];
+					return this.#showEquipmenConfig(object, itemId);
+				}
+			case 'delete': {
+				if (type !== 'equipment') {
 					return item?.deleteDialog();
+				} else {
+					const response = await Dialog.confirm({
+						title: 'Delete Equipment',
+						content:
+							'<p>Are You Sure?</p><p>This Equipment will be permanently deleted and cannot be recovered.</p>',
+						defaultYes: false,
+						yes: () => {},
+						options: {
+							classes: [SYSTEM.id, 'sheet', 'dialog'],
+						},
+					});
+
+					if (response) {
+						equipment.splice(itemId, 1);
+						return this.actor.update({ 'system.equipment': equipment });
+					} else {
+						return;
+					}
+				}
 			}
 		}
+	}
+
+	async #showEquipmenConfig(equipment, idx) {
+		const sheetData = {
+			parent: this.actor,
+			type: 'equipment',
+			collection: 'equipment',
+			objectId: idx,
+			object: equipment,
+		};
+		const sheet = new EmbeddedObjectConfig(sheetData);
+		sheet.render(true);
 	}
 }

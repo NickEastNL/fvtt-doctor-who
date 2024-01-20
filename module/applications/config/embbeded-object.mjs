@@ -1,18 +1,22 @@
-export default class GadgetDistinctionConfig extends FormApplication {
-	constructor(parent, object, objectId, options) {
+export default class EmbeddedObjectConfig extends FormApplication {
+	constructor(data, options) {
 		super(options);
-		this.parent = parent;
-		this.objectId = objectId;
-		this.object = object;
+		this.parent = data.parent;
+		this.objectCollection = data.collection;
+		this.objectId = data.objectId;
+		this.object = data.object;
 		this.parent.apps[this.appId] = this;
+
+		this.options.classes = [...this.options.classes, data.type];
+		this.options.template = `systems/${SYSTEM.id}/templates/sheets/${data.type}.hbs`;
 	}
 
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			width: 500,
 			height: 300,
-			classes: [SYSTEM.id, 'sheet', 'item', 'distinction'],
-			template: `systems/${SYSTEM.id}/templates/sheets/distinction.hbs`,
+			classes: [SYSTEM.id, 'sheet', 'item'],
+			sheetConfig: true,
 			resizable: false,
 			submitOnChange: true,
 			submitOnClose: true,
@@ -34,12 +38,12 @@ export default class GadgetDistinctionConfig extends FormApplication {
 	}
 
 	_updateObject(event, formData) {
-		const distinctions = foundry.utils.deepClone(this.parent.system.distinctions);
+		const objects = foundry.utils.deepClone(this.parent.system[this.objectCollection]);
 
 		if (formData.name) this.object.name = formData.name;
 		if (formData.description) this.object.description = formData.description;
 
-		distinctions[this.objectId] = this.object;
-		this.parent.update({ 'system.distinctions': distinctions });
+		objects[this.objectId] = this.object;
+		this.parent.update({ [`system.${this.objectCollection}`]: objects });
 	}
 }

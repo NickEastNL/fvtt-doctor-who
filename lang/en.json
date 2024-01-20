@@ -3,6 +3,7 @@
 		"Actor.character": "Character",
 
 		"Item.distinction": "Distinction",
+		"Item.equipment": "Equipment",
 		"Item.gadget": "Gadget",
 		"Item.weapon": "Weapon"
 	},

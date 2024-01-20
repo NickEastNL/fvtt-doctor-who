@@ -1,4 +1,4 @@
-import { GadgetDistinctionConfig } from '../_module.mjs';
+import { EmbeddedObjectConfig } from '../_module.mjs';
 
 export default class GadgetSheet extends ItemSheet {
 	static get defaultOptions() {
@@ -85,7 +85,14 @@ export default class GadgetSheet extends ItemSheet {
 	}
 
 	async #showDistinctionConfig(distinction, idx) {
-		const sheet = new GadgetDistinctionConfig(this.item, distinction, idx);
+		const sheetData = {
+			parent: this.item,
+			type: 'distinction',
+			collection: 'distinctions',
+			objectId: idx,
+			object: distinction,
+		};
+		const sheet = new EmbeddedObjectConfig(sheetData);
 		sheet.render(true);
 	}
 }

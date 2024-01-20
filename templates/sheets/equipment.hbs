@@ -1,0 +1,11 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header">
+		<h1 class="title">
+			<input name="name" type="text" value="{{item.name}}" placeholder="Equipment Name" />
+		</h1>
+	</header>
+
+	<section class="tab sheet-body flexcol">
+		{{editor description target="description" button=true engine="prosemirror"}}
+	</section>
+</form>

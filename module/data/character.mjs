@@ -92,6 +92,13 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		schema.homeworld = new fields.StringField();
 		schema.conditions = new fields.ArrayField(new fields.StringField());
 
+		schema.equipment = new fields.ArrayField(
+			new fields.SchemaField({
+				name: new fields.StringField({ initial: '', required: true, nullable: false }),
+				description: new fields.StringField(),
+			})
+		);
+
 		return schema;
 	}
 
