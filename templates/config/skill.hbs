@@ -10,10 +10,12 @@
 				<span>{{skill.base}}</span>
 			</div>
 
+			{{#unless isUnlocked}}
 			<div class="score">
 				<label>Available Points</label>
 				<span>{{skillPoints}}</span>
 			</div>
+			{{/unless}}
 		</div>
 
 		<div class="section-header flex-center">

@@ -5,15 +5,13 @@ export default class SkillConfig extends FormApplication {
 		this.skillId = skillId;
 		this.config = SYSTEM.SKILLS[skillId];
 		this.actor.apps[this.appId] = this;
-
-		console.log(this);
 	}
 
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			width: 350,
 			height: 300,
-			classes: ['doctor-who', 'sheet', 'skill'],
+			classes: [SYSTEM.id, 'sheet', 'skill'],
 			template: `systems/${SYSTEM.id}/templates/config/skill.hbs`,
 			resizable: false,
 			submitOnChange: true,
@@ -29,21 +27,21 @@ export default class SkillConfig extends FormApplication {
 	}
 
 	async getData() {
+		const isUnlocked = this.actor.system.isUnlocked;
 		const skill = this.actor.skills[this.skillId];
 		const skillPoints = this.actor.system.derivedPoints.skills.available;
-		const context = {
+		const data = {
 			skill,
 			skillPoints,
+			isUnlocked,
 			hasPoints: skillPoints > 0,
 			hasMinimumScore: skill.base >= 3,
 			config: this.config,
 		};
 
-		context.canAddSpecs = context.hasPoints && context.hasMinimumScore;
+		data.canAddSpecs = (isUnlocked || data.hasPoints) && data.hasMinimumScore;
 
-		console.log(context);
-
-		return context;
+		return data;
 	}
 
 	activateListeners(html) {

@@ -22,26 +22,27 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	async getData(options) {
-		const context = super.getData(options);
-		const actor = (context.actor = context.document);
+		const data = super.getData(options);
+		const actor = (data.actor = data.document);
 
-		context.focus = foundry.utils.deepClone(actor.system.focus);
-		context.focus.intensity =
-			SYSTEM.GENERAL_RULES.FOCUS_INTENSITY[context.focus.intensity];
+		data.isGM = game.user.isGM;
+		data.isUnlocked = actor.system.isUnlocked;
+		data.focus = foundry.utils.deepClone(actor.system.focus);
+		data.focus.intensity = SYSTEM.GENERAL_RULES.FOCUS_INTENSITY[data.focus.intensity];
 
-		context.storyPoints = this.#formatStoryPoints();
+		data.storyPoints = this.#formatStoryPoints();
 
 		// TODO: Add modifiers from XP spends.
-		context.attributes = this.#formatAttributes(actor.system.attributes);
-		context.skills = this.#formatSkills(actor.system.skills);
+		data.attributes = this.#formatAttributes(actor.system.attributes);
+		data.skills = this.#formatSkills(actor.system.skills);
 
-		context.distinctions = this.#formatDistinctions(actor.distinctions);
+		data.distinctions = this.#formatDistinctions(actor.distinctions);
+		data.maxDistinctions = data.distinctions.length >= 2 && !data.isUnlocked;
 
-		context.conditions = actor.system.conditions;
+		data.equipment = actor.equipment;
+		data.conditions = actor.system.conditions;
 
-		console.debug(context);
-
-		return context;
+		return data;
 	}
 
 	#formatStoryPoints() {
@@ -59,6 +60,7 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	#formatAttributes(source) {
+		const isUnlocked = this.actor.system.isUnlocked;
 		const derivedPoints = this.actor.system.derivedPoints;
 		const availablePoints = derivedPoints.attributes.available;
 		const hasPoints = availablePoints > 0;
@@ -72,7 +74,10 @@ export default class CharacterSheet extends ActorSheet {
 			attribute.base = source[attribute.id].base;
 			attribute.current = source[attribute.id].current;
 
-			if (attribute.base < derivedPoints.attributes.cap && hasPoints)
+			if (
+				(isUnlocked && attribute.base < 10) ||
+				(attribute.base < derivedPoints.attributes.cap && hasPoints)
+			)
 				attribute.canIncreaseBase = true;
 			if (attribute.base > 1) attribute.canDecreaseBase = true;
 
@@ -97,6 +102,7 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	#formatSkills(source) {
+		const isUnlocked = this.actor.system.isUnlocked;
 		const derivedPoints = this.actor.system.derivedPoints.skills;
 		const availablePoints = derivedPoints.available;
 		const hasPoints = availablePoints > 0;
@@ -110,7 +116,8 @@ export default class CharacterSheet extends ActorSheet {
 			skill.base = source[skill.id].base;
 			skill.specialisations = source[skill.id].specialisations;
 
-			if (skill.base < derivedPoints.cap && hasPoints) skill.canIncrease = true;
+			if (isUnlocked || (skill.base < derivedPoints.cap && hasPoints))
+				skill.canIncrease = true;
 			if (skill.base > 0) skill.canDecrease = true;
 
 			return skill;
@@ -139,6 +146,11 @@ export default class CharacterSheet extends ActorSheet {
 		event.preventDefault();
 		const b = event.currentTarget;
 		switch (b.dataset.action) {
+			case 'unlockLimits': {
+				const isUnlocked = this.actor.system.isUnlocked;
+				return this.actor.update({ 'system.isUnlocked': !isUnlocked });
+			}
+
 			// Adjust Story Points
 			case 'storyPointsIncrease':
 				return this.actor.updateStoryPoints(1);
@@ -192,6 +204,24 @@ export default class CharacterSheet extends ActorSheet {
 				return this.#editDistinction('delete', itemId);
 			}
 
+			// Modify Equipment
+			case 'addEquipment': {
+				// return this.#editEquipment('add', type);
+				break;
+			}
+			case 'editEquipment': {
+				const dataset = b.closest('.list-item').dataset;
+				const itemId = dataset.itemId;
+				const type = dataset.type;
+				return this.#editEquipment('edit', type, itemId);
+			}
+			case 'deleteEquipment': {
+				const dataset = b.closest('.list-item').dataset;
+				const itemId = dataset.itemId;
+				const type = dataset.type;
+				return this.#editEquipment('delete', type, itemId);
+			}
+
 			// Modify Conditions
 			case 'addCondition':
 				return this.actor.editCondition();
@@ -231,6 +261,35 @@ export default class CharacterSheet extends ActorSheet {
 				return item?.sheet.render(true);
 			case 'delete':
 				return item?.deleteDialog();
+		}
+	}
+
+	async #editEquipment(action = 'add', type = 'equipment', itemId = null) {
+		if (type === 'equipment') {
+			return;
+		} else {
+			const item = this.actor.items.get(itemId);
+			const name = game.i18n.format('DOCUMENT.New', {
+				type: game.i18n.format(`TYPES.Item.${type}`),
+			});
+
+			switch (action) {
+				case 'add':
+					return Item.create(
+						{
+							name,
+							type,
+						},
+						{
+							parent: this.actor,
+							renderSheet: true,
+						}
+					);
+				case 'edit':
+					return item?.sheet.render(true);
+				case 'delete':
+					return item?.deleteDialog();
+			}
 		}
 	}
 }

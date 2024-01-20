@@ -10,6 +10,10 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			integer: true,
 		};
 
+		schema.isUnlocked = new fields.BooleanField({
+			initial: false,
+		});
+
 		schema.storyPoints = new fields.NumberField({
 			...requiredInteger,
 			initial: 12,
@@ -154,15 +158,5 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			this.derivedPoints.skills.available += this.transferredPoints;
 			this.derivedPoints.attributes.available -= this.transferredPoints;
 		}
-
-		// if (
-		// 	(this.transferredPoints > 0 &&
-		// 		this.derivedPoints.skills.available >= this.transferredPoints) ||
-		// 	(this.transferredPoints > 0 && this.derivedPoints.attributes.available > 0)
-		// ) {
-		// 	this.derivedPoints.canTransfer = true;
-		// } else {
-		// 	this.derivedPoints.canTransfer = false;
-		// }
 	}
 }

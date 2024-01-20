@@ -4,21 +4,21 @@
 	<section class="actor-info flexcol">
 		<section class="flexrow">
 			<img class="profile" src="{{data.img}}" title="{{data.name}}" data-edit="img" width="179" height="179" />
-			{{log this}}
+
 			<section>
 				<h1 class="title">
 					<input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
 
 					{{#if isGM}}
-					{{#if unlockLimits}}
-					<a class="button" data-tooltip="Unlock Limitations" data-action="unlockLimits">
+					{{#unless isUnlocked}}
+					<a class="button lock" data-tooltip="Unlock Limitations" data-action="unlockLimits">
 						<i class="fas fa-lock-open"></i>
 					</a>
 					{{else}}
-					<a class="button" data-tooltip="Lock Limitations" data-action="unlockLimits">
+					<a class="button lock" data-tooltip="Lock Limitations" data-action="unlockLimits">
 						<i class="fas fa-lock"></i>
 					</a>
-					{{/if}}
+					{{/unless}}
 					{{/if}}
 				</h1>
 
@@ -104,7 +104,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
-					{{#unless unlockLimits}}
+					{{#unless isUnlocked}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Available Points: {{attributes.availablePoints}}<hr/>Transferred Points: {{attributes.transferredPoints}}">{{attributes.availablePoints}}</span>
 						{{#if attributes.hasPoints}}
@@ -153,7 +153,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
-					{{#unless unlockLimits}}
+					{{#unless isUnlocked}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Available Points">{{skills.availablePoints}}</span>
 						{{#if skills.canTransfer}}

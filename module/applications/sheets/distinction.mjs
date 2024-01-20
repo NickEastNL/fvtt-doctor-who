@@ -1,11 +1,9 @@
 export default class DistinctionSheet extends ItemSheet {
 	static get defaultOptions() {
-		const options = super.defaultOptions;
-
-		return Object.assign(options, {
+		return Object.assign(super.defaultOptions, {
 			width: 500,
 			height: 300,
-			classes: [SYSTEM.id, 'sheet', 'item', this.itemType],
+			classes: [SYSTEM.id, 'sheet', 'item', 'distinction'],
 			template: `systems/${SYSTEM.id}/templates/sheets/distinction.hbs`,
 			tabs: [
 				{
@@ -19,13 +17,13 @@ export default class DistinctionSheet extends ItemSheet {
 	}
 
 	async getData(options = {}) {
-		const context = super.getData(options);
+		const data = super.getData(options);
 		const item = this.object.toObject();
 
-		context.description = item.system.description;
-		context.options = item.system.options;
-		console.log(context);
+		data.description = item.system.description;
+		data.options = item.system.options;
+		data.isGM = game.user.isGM;
 
-		return context;
+		return data;
 	}
 }
