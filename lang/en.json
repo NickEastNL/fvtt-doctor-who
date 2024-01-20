@@ -65,6 +65,12 @@
 		"Conditions": "Conditions"
 	},
 
+	"DAMAGE": {
+		"Amount": "Amount",
+		"Stun": "Stun",
+		"Lethal": "Lethal"
+	},
+
 	"DIALOGS": {
 		"EditSkill": "Edit Skill",
 		"EditSkillTitle": "[{actor}] Edit Skill ({skill})",

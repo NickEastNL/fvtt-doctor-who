@@ -32,6 +32,7 @@ Hooks.once('init', async function () {
 	CONFIG.Item.dataModels = {
 		distinction: models.DistinctionModel,
 		gadget: models.GadgetModel,
+		weapon: models.WeaponModel,
 	};
 
 	Items.unregisterSheet('core', ItemSheet);
@@ -43,6 +44,11 @@ Hooks.once('init', async function () {
 	Items.registerSheet(SYSTEM.id, applications.GadgetSheet, {
 		types: ['gadget'],
 		label: 'SHEETS.GadgetSheet',
+		makeDefault: true,
+	});
+	Items.registerSheet(SYSTEM.id, applications.WeaponSheet, {
+		types: ['weapon'],
+		label: 'SHEETS.WeaponSheet',
 		makeDefault: true,
 	});
 });

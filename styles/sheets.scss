@@ -155,5 +155,19 @@
 				margin-bottom: 4px;
 			}
 		}
+
+		i {
+			width: 20px;
+		}
+	}
+
+	.weapon-damage {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
+
+		.damage-normal {
+			font-weight: bold;
+		}
 	}
 }

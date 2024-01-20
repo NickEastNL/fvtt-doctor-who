@@ -4,4 +4,30 @@
 	.form-group {
 		gap: var(--margin-size-normal);
 	}
+
+	.editor-section {
+		flex: 2;
+		padding-bottom: var(--margin-size-normal);
+		margin-bottom: var(--margin-size-normal);
+		border-bottom: 1px solid black;
+	}
+}
+
+.doctor-who.sheet.gadget {
+	.score-header {
+		flex: none;
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: var(--margin-size-normal);
+	}
+}
+
+.doctor-who.sheet.weapon {
+	.damage-section {
+		flex: none;
+	}
+
+	.weapon-damage {
+		font-size: 1.2rem;
+	}
 }

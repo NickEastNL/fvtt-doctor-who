@@ -100,6 +100,12 @@ export const SKILLS = Object.freeze({
 	},
 });
 
+export const WEAPON_TYPES = Object.freeze({
+	amount: 'DAMAGE.Amount',
+	stun: 'DAMAGE.Stun',
+	lethal: 'DAMAGE.Lethal',
+});
+
 export const SYSTEM = {
 	id,
 	GENERAL_RULES,
@@ -108,4 +114,5 @@ export const SYSTEM = {
 	SKILL_RULES,
 	ATTRIBUTES,
 	SKILLS,
+	WEAPON_TYPES,
 };

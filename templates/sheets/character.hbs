@@ -274,8 +274,9 @@
 					{{#each equipment.weapons as |weapon|}}
 					<li class="list-item weapon" data-item-id="{{weapon._id}}" data-type="weapon">
 						<a data-action="editEquipment">
-							<i class="fas fa-wrench"></i>
+							<i class="fas fa-raygun"></i>
 							<span>{{weapon.name}}</span>
+							<span class="weapon-damage">({{{weapon.system.damageLabel}}})</span>
 						</a>
 						<div>
 							<a class="button" data-action="deleteEquipment">

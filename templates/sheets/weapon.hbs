@@ -1,0 +1,33 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header">
+		<h1 class="title">
+			<input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name" />
+		</h1>
+	</header>
+
+	<section class="sheet-body flexcol">
+		<div class="editor-section flexcol">
+			{{editor description target="system.description" button=true engine="prosemirror"}}
+		</div>
+
+		<div class="damage-section flexcol">
+			<h2 class="section-header flex-center">Damage</h2>
+
+			<div class="weapon-damage">{{{damageLabel}}}</div>
+
+			<div class="form-group">
+				<label>Damage Type</label>
+
+				<div class="form-fields">
+					{{radioBoxes "system.damageType" choices checked=damageType localize=true}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Damage Amount</label>
+
+				<input type="number" name="system.baseDamage" value="{{baseDamage}}" {{#unless isAmount}}disabled{{/unless}}>
+			</div>
+		</div>
+	</section>
+</form>
