@@ -28,14 +28,22 @@
 					<input name="system.concept" type="text" value="{{actor.system.concept}}" />
 				</div>
 
-				<div class="form-group form-group-stacked focus">
-					<span>
+				<div class="form-group focus">
+					<div class="form-group form-group-stacked">
 						<label>{{localize "CHARACTER.Focus"}}</label>
-						<span>({{focus.intensity}})</span>
-					</span>
+						<input name="system.focus.name" type="text" value="{{focus.name}}" />
+					</div>
 
-
-					<input name="system.focus.name" type="text" value="{{focus.name}}" />
+					<div class="form-group form-group-stacked">
+						<label>{{localize "CHARACTER.FocusIntensity"}}</label>
+						<select name="system.focus.intensity">
+							{{#select focus.intensity}}
+							<option value="0">Normal</option>
+							<option value="1">Strong</option>
+							<option value="2">Intense</option>
+							{{/select}}
+						</select>
+					</div>
 				</div>
 
 				<div class="form-group homeworld">
@@ -242,6 +250,20 @@
 						</a>
 					</div>
 				</div>
+
+				<div class="score-row">
+					<div class="score">
+						<span class="stat-counter"></span>
+						<label>Spent XP</label>
+					</div>
+
+					<div class="score">
+						<label>Available XP</label>
+						<span class="stat-counter"></span>
+					</div>
+				</div>
+
+				<ol></ol>
 			</div>
 
 			{{!-- Equipment --}}

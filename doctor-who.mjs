@@ -19,7 +19,7 @@ Hooks.once('init', async function () {
 
 	CONFIG.DOCTORWHO = SYSTEM;
 
-	CONFIG.Actor.documentClass = documents.CharacterActor;
+	CONFIG.Actor.documentClass = documents.CharacterDW;
 	CONFIG.Actor.dataModels = {
 		character: models.CharacterModel,
 	};
@@ -31,6 +31,7 @@ Hooks.once('init', async function () {
 		makeDefault: true,
 	});
 
+	CONFIG.Item.documentClass = documents.ItemDW;
 	CONFIG.Item.dataModels = {
 		distinction: models.DistinctionModel,
 		gadget: models.GadgetModel,

@@ -53,6 +53,7 @@
 		"Name": "Character Name",
 		"Concept": "Concept",
 		"Focus": "Focus",
+		"FocusIntensity": "Intensity",
 		"Homeworld": "Homeworld",
 		"TechLevel": "Tech Level",
 		"ShortGoal": "Short-Term Goal",

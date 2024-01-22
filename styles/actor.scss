@@ -16,16 +16,21 @@
 				font-weight: bold;
 				text-transform: uppercase;
 			}
-		}
 
-		.focus {
-			> span {
-				display: flex;
-				align-items: center;
-				gap: 4px;
+			> .form-group {
+				margin: 0;
 			}
 		}
 
+		// .focus {
+		// 	> span {
+		// 		display: flex;
+		// 		align-items: center;
+		// 		gap: 4px;
+		// 	}
+		// }
+
+		.focus,
 		.homeworld {
 			gap: var(--margin-size-normal);
 		}
@@ -101,6 +106,7 @@
 		display: inline-block;
 		flex: 0 0 28px;
 		width: 28px;
+		min-height: 28px;
 		border: 1px solid black;
 		border-radius: 3px;
 		font-size: 1rem;

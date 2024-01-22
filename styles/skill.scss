@@ -1,13 +1,6 @@
 @use './variables.scss';
 
 .doctor-who.sheet.skill {
-	.skill-stats {
-		flex: none;
-		display: flex;
-		justify-content: flex-end;
-		margin-bottom: var(--margin-size-normal);
-	}
-
 	.tooltips {
 		flex: none;
 	}

@@ -25,14 +25,11 @@ export default class GadgetSheet extends ItemSheet {
 
 	#formatStoryPoints() {
 		const storyPoints = this.item.system.storyPoints;
-		const maxPoints = this.item.system.maxStoryPoints;
 		const points = {
-			max: maxPoints,
-			current: storyPoints,
+			points: storyPoints,
 		};
 
-		if (points.current > 0) points.canDecrease = true;
-		if (points.current < points.max) points.canIncrease = true;
+		if (points.points > 0) points.canDecrease = true;
 
 		return points;
 	}

@@ -28,7 +28,7 @@ export default class SkillConfig extends FormApplication {
 
 	async getData() {
 		const isLocked = this.actor.system.isLocked;
-		const skill = this.actor.skills[this.skillId];
+		const skill = this.actor.system.skills[this.skillId];
 		const data = {
 			skill,
 			isLocked,

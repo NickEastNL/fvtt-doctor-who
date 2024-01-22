@@ -28,7 +28,6 @@ export default class CharacterSheet extends ActorSheet {
 		data.isGM = game.user.isGM;
 		data.isLocked = actor.system.isLocked;
 		data.focus = foundry.utils.deepClone(actor.system.focus);
-		data.focus.intensity = SYSTEM.GENERAL_RULES.FOCUS_INTENSITY[data.focus.intensity];
 
 		data.storyPoints = this.#formatStoryPoints();
 

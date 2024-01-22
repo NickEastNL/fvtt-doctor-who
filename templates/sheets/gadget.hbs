@@ -1,5 +1,7 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 	<header class="sheet-header">
+		<img class="profile" src="{{data.img}}" title="{{data.name}}" data-edit="img" />
+
 		<h1 class="title">
 			<input name="name" type="text" value="{{item.name}}" placeholder="Gadget Name" />
 		</h1>
@@ -21,14 +23,14 @@
 
 			<div class="score-header">
 				<div class="score">
-					<label>Story Points (Max {{storyPoints.max}})</label>
+					<label>Story Points</label>
 					<a class="stat-control {{#unless storyPoints.canDecrease}}inactive{{/unless}}" data-action="storyPointsDecrease">
 						<i class="fas fa-caret-left"></i>
 					</a>
-					<span class="stat-counter {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
-						{{storyPoints.current}}
+					<span class="stat-counter">
+						{{storyPoints.points}}
 					</span>
-					<a class="stat-control {{#unless storyPoints.canIncrease}}inactive{{/unless}}" data-action="storyPointsIncrease">
+					<a class="stat-control" data-action="storyPointsIncrease">
 						<i class="fas fa-caret-right"></i>
 					</a>
 				</div>
@@ -36,7 +38,7 @@
 
 			<ol class="item-list">
 				{{#each distinctions as |d|}}
-				<li class="item distinction" data-index="{{@index}}">
+				<li class="list-item distinction" data-index="{{@index}}">
 					<a data-action="editDistinction" data-tooltip="{{d.description}}">{{d.name}}</a>
 					<div>
 						<a class="button" data-action="deleteDistinction">

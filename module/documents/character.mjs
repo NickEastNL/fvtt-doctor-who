@@ -1,12 +1,9 @@
 import { SYSTEM } from '../config.mjs';
 
-export default class CharacterActor extends Actor {
-	distinctions = this.distinctions;
-
-	gadgets = this.gadgets;
-
-	get skills() {
-		return this.system.skills;
+export default class CharacterDW extends Actor {
+	static getDefaultArtwork(actorData) {
+		let icon = `systems/${SYSTEM.id}/icons/${actorData.type}.svg`;
+		return { img: icon };
 	}
 
 	prepareEmbeddedDocuments() {

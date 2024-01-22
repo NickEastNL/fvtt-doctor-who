@@ -28,8 +28,12 @@
 
 	input[type='text'],
 	input[type='number'] {
-		height: initial;
+		width: 100%;
 		padding: 0.2rem 0.3rem;
+	}
+
+	select {
+		padding: 2px 3px;
 	}
 
 	label.checkbox {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="distinction" x="0" y="0" width="1024" height="1024" style="fill:none;"/>
+    <g id="distinction1" serif:id="distinction">
+        <path d="M512,0L1024,512L512,1024L0,512L512,0Z" style="fill:rgb(95,114,134);"/>
+        <g transform="matrix(1.95706,0,0,1.95706,-523.744,-321.865)">
+            <g transform="matrix(255.485,0,0,255.485,421.675,517.033)">
+                <path d="M0.083,-0L0.401,-0C0.63,-0 0.787,-0.138 0.787,-0.35C0.787,-0.562 0.63,-0.7 0.401,-0.7L0.083,-0.7L0.083,-0ZM0.245,-0.133L0.245,-0.567L0.393,-0.567C0.532,-0.567 0.623,-0.484 0.623,-0.35C0.623,-0.216 0.532,-0.133 0.393,-0.133L0.245,-0.133Z" style="fill:white;fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
