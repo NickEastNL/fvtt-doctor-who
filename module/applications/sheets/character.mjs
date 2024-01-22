@@ -129,9 +129,11 @@ export default class CharacterSheet extends ActorSheet {
 	#formatDistinctions(distinctions) {
 		return Object.values(distinctions).map((src) => {
 			const distinction = foundry.utils.deepClone(src);
-			const options = distinction.system.options;
+			// const modifiers = distinction.system.modifiers;
 
-			distinction.modifier = Object.values(options).some((value) => value > 0);
+			// distinction.modifier = Object.values(modifiers).some(
+			// 	(mod) => mod.value > 0 || ['attribute_cap', 'skill_cap'].includes(mod.id)
+			// );
 
 			return distinction;
 		});

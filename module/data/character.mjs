@@ -106,11 +106,11 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 
 	prepareBaseData() {
 		const parent = this.parent;
-		const modifiers = {
-			modAttrPoints: 0,
-			modSkillPoints: 0,
-			modAttrCap: 0,
-			modSkillCap: 0,
+		const finalMods = {
+			attribute_points: 0,
+			skill_points: 0,
+			attribute_cap: SYSTEM.ATTRIBUTE_RULES.DEFAULT_CAP,
+			skill_cap: SYSTEM.SKILL_RULES.DEFAULT_CAP,
 		};
 
 		const distinctionCost =
@@ -121,13 +121,26 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		});
 		const totalCost = distinctionCost + gadgetCost;
 
-		Object.values(parent.itemTypes.distinction).forEach((d) => {
-			const options = d.system.options;
-			modifiers.modAttrPoints += options.modAttrPoints;
-			modifiers.modSkillPoints += options.modSkillPoints;
-			modifiers.modAttrCap += options.modAttrCap;
-			modifiers.modSkillCap += options.modSkillCap;
-		});
+		// Object.values(parent.itemTypes.distinction).forEach((d) => {
+		// 	const modifiers = d.system.modifiers;
+		// 	const types = ['attribute_points', 'skill_points', 'attribute_cap', 'skill_cap'];
+
+		// 	for (const mod of modifiers) {
+		// 		if (!types.includes(mod.id)) return;
+
+		// 		if (mod.id === 'attribute_cap') {
+		// 			finalMods[mod.id] = SYSTEM.ATTRIBUTE_RULES.MAX_CAP;
+		// 		}
+
+		// 		if (mod.id === 'skill_cap') {
+		// 			finalMods[mod.id] = SYSTEM.SKILL_RULES.MAX_CAP;
+		// 		}
+
+		// 		if (mod.value > 0) {
+		// 			finalMods[mod.id] += mod.value;
+		// 		}
+		// 	}
+		// });
 
 		let attributePointsSpent = 0;
 		Object.values(this.attributes).forEach((a) => {
@@ -143,12 +156,12 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		this.derivedPoints = {
 			storyPoints: SYSTEM.STORY_POINTS.BASE - totalCost,
 			attributes: {
-				cap: SYSTEM.ATTRIBUTE_RULES.DEFAULT_CAP + modifiers.modAttrCap,
-				pool: SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS + modifiers.modAttrPoints,
+				cap: finalMods.attribute_cap,
+				pool: SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS + finalMods.attribute_points,
 			},
 			skills: {
-				cap: SYSTEM.SKILL_RULES.DEFAULT_CAP + modifiers.modSkillCap,
-				pool: SYSTEM.SKILL_RULES.DEFAULT_POINTS + modifiers.modSkillPoints,
+				cap: finalMods.skill_cap,
+				pool: SYSTEM.SKILL_RULES.DEFAULT_POINTS + finalMods.skill_points,
 			},
 		};
 

@@ -20,11 +20,11 @@
 		align-items: stretch;
 	}
 
-	.form-group {
-		> * {
-			flex: 1;
-		}
-	}
+	// .form-group {
+	// 	> * {
+	// 		flex: 1;
+	// 	}
+	// }
 
 	.form-group-stacked {
 		flex-direction: column;

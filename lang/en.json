@@ -75,11 +75,14 @@
 	"DIALOGS": {
 		"EditSkill": "Edit Skill",
 		"EditSkillTitle": "[{actor}] Edit Skill ({skill})",
+		"ModifierConfigTitle": "Select Modifier Type",
 		"AddSpecialisation": "Add Specialisation",
 		"EditSpecialisation": "Edit Specialisation",
 		"AddDistinction": "Add Distinction",
 		"EditDistinction": "Edit Distinction",
 		"AddCondition": "Add Condition",
-		"EditCondition": "Edit Condition"
+		"EditCondition": "Edit Condition",
+
+		"AddModifier": "Add Modifier"
 	}
 }

@@ -69,7 +69,7 @@
 					</a>
 				</div>
 
-				<div class="story-points-base" data-tooltip="12 - Num Distinctions x 2">
+				<div class="story-points-base">
 					Base:
 					{{storyPoints.base}}
 					/ 12
@@ -102,6 +102,12 @@
 			{{!-- Attributes --}}
 			<div class="stat-section attributes-section" data-type="attributes">
 				<div class="section-header flex-center">
+					<div class="float-left">
+						<a class="button roll-button" data-tooltip="Roll Dice" data-action="rollDice">
+							<i class="fas fa-dice"></i>
+						</a>
+					</div>
+
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
 					{{#unless isUnlocked}}

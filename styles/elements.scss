@@ -44,6 +44,10 @@
 		align-items: center;
 	}
 
+	.flex-none {
+		flex: none;
+	}
+
 	.flex-center {
 		justify-content: center;
 	}
@@ -53,6 +57,12 @@
 	}
 
 	a {
+		&.button {
+			flex: none;
+			display: flex;
+			align-items: center;
+		}
+
 		&:hover {
 			text-decoration: underline;
 			text-shadow: none;

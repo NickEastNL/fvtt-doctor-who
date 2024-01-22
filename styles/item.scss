@@ -13,6 +13,14 @@
 	}
 }
 
+.doctor-who.sheet.distinction {
+	.modifiers-header {
+		padding: 4px;
+		border-top: 1px solid var(--color-border-light-primary);
+		border-bottom: 1px solid var(--color-border-light-primary);
+	}
+}
+
 .doctor-who.sheet.gadget {
 	.score-header {
 		flex: none;

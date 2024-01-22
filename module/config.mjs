@@ -106,6 +106,37 @@ export const WEAPON_TYPES = Object.freeze({
 	lethal: 'DAMAGE.Lethal',
 });
 
+// export const DISTINCTION_MODIFIERS = Object.freeze({
+// 	attribute_points: {
+// 		type: 'number',
+// 		label: 'Attribute Points',
+// 	},
+// 	skill_points: {
+// 		type: 'number',
+// 		label: 'Skill Points',
+// 	},
+// 	attribute_cap: {
+// 		type: 'boolean',
+// 		label: 'Disable Attribute Cap',
+// 	},
+// 	skill_cap: {
+// 		type: 'boolean',
+// 		label: 'Disable Skill Cap',
+// 	},
+// 	resistance: {
+// 		type: 'number',
+// 		label: 'Damage Resistance',
+// 	},
+// 	roll_bonus: {
+// 		type: 'number',
+// 		label: 'Roll Bonus',
+// 	},
+// 	dice_bonus: {
+// 		type: 'number',
+// 		label: 'Dice Bonus',
+// 	},
+// });
+
 export const SYSTEM = {
 	id,
 	GENERAL_RULES,
@@ -115,4 +146,5 @@ export const SYSTEM = {
 	ATTRIBUTES,
 	SKILLS,
 	WEAPON_TYPES,
+	DISTINCTION_MODIFIERS,
 };

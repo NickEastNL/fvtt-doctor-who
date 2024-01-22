@@ -9,6 +9,7 @@ export default class EmbeddedObjectConfig extends FormApplication {
 
 		this.options.classes = [...this.options.classes, data.type];
 		this.options.template = `systems/${SYSTEM.id}/templates/sheets/${data.type}.hbs`;
+		this.options.tabs = data.tabs;
 	}
 
 	static get defaultOptions() {
@@ -21,6 +22,13 @@ export default class EmbeddedObjectConfig extends FormApplication {
 			submitOnChange: true,
 			submitOnClose: true,
 			closeOnSubmit: false,
+			tabs: [
+				{
+					navSelector: '.tabs',
+					contentSelector: 'form',
+					initial: 'description',
+				},
+			],
 		});
 	}
 
@@ -28,7 +36,7 @@ export default class EmbeddedObjectConfig extends FormApplication {
 		return this.object.name;
 	}
 
-	async getData(options = {}) {
+	getData(options = {}) {
 		const data = super.getData(options);
 
 		data.isConfig = true;

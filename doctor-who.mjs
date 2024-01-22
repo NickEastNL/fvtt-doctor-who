@@ -17,6 +17,8 @@ import * as models from './module/data/_module.mjs';
 Hooks.once('init', async function () {
 	console.log('Initializing Doctor Who The Roleplaying Game');
 
+	CONFIG.DOCTORWHO = SYSTEM;
+
 	CONFIG.Actor.documentClass = documents.CharacterActor;
 	CONFIG.Actor.dataModels = {
 		character: models.CharacterModel,
