@@ -19,13 +19,6 @@ export default class GadgetModel extends foundry.abstract.TypeDataModel {
 					nullable: false,
 				}),
 				description: new fields.HTMLField({ initial: '' }),
-				// modifiers: new fields.ArrayField(
-				// 	new fields.SchemaField({
-				// 		id: new fields.StringField({ required: true }),
-				// 		type: new fields.StringField({ required: true }),
-				// 		value: new fields.NumberField({ initial: 0 }),
-				// 	})
-				// ),
 			})
 		);
 

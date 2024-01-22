@@ -77,7 +77,6 @@ export default class GadgetSheet extends ItemSheet {
 		const newDistinction = {
 			name: 'New Distinction',
 			description: '',
-			// modifiers: [],
 		};
 
 		switch (action) {
@@ -129,12 +128,4 @@ export default class GadgetSheet extends ItemSheet {
 		const sheet = new EmbeddedObjectConfig(sheetData);
 		sheet.render(true);
 	}
-
-	// async updateModifiers(id, modifiers) {
-	// 	const distinctions = foundry.utils.deepClone(this.item.system.distinctions);
-
-	// 	distinctions[id].modifiers = modifiers;
-
-	// 	this.item.update({ 'system.distinctions': distinctions });
-	// }
 }
