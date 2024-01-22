@@ -4,9 +4,7 @@
 	--down-color: hsl(0, 50%, 25%);
 
 	.actor-info {
-		margin-bottom: var(--margin-size-normal);
-		padding-bottom: var(--margin-size-normal);
-		border-bottom: 1px solid black;
+		flex: none;
 
 		.form-group {
 			margin: 0 0 2px 0;

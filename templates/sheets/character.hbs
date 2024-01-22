@@ -101,8 +101,13 @@
 		</section>
 	</section>
 
+	<nav class="sheet-tabs tabs">
+		<a class="item" data-tab="stats">Stats</a>
+		<a class="item" data-tab="details">Details</a>
+	</nav>
+
 	{{!-- Main Body --}}
-	<div class="sheet-body flexrow flex-stretch">
+	<div class="tab sheet-body flexrow flex-stretch" data-tab="stats">
 
 		{{!-- Left Column --}}
 		<section class="column column-left flexcol">
@@ -371,6 +376,9 @@
 				</ol>
 			</div>
 		</section>
+	</div>
 
+	<div class="tab sheet-body flexrow flex-stretch" data-tab="details">
+		{{editor actor.system.details target="system.details" button=true engine="prosemirror"}}
 	</div>
 </form>

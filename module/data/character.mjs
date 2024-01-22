@@ -114,6 +114,8 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			),
 		});
 
+		schema.details = new fields.HTMLField();
+
 		return schema;
 	}
 
@@ -166,7 +168,7 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			availableXp: availableXp - this.experience.xpSpent,
 		};
 
-		this.derivedPoints.attributes.spent = attributePointsSpent;
+		this.derivedPoints.attributes.spent = attributePointsSpent - 6;
 		this.derivedPoints.skills.spent = skillPointsSpent;
 	}
 }

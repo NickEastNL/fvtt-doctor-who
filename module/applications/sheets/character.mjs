@@ -13,8 +13,8 @@ export default class CharacterSheet extends ActorSheet {
 			tabs: [
 				{
 					navSelector: '.tabs',
-					contentSelector: '.sheet-tabs',
-					initial: 'attributes',
+					contentSelector: 'form',
+					initial: 'stats',
 				},
 			],
 			scrollY: [],
@@ -128,8 +128,6 @@ export default class CharacterSheet extends ActorSheet {
 		data.entries.forEach((ex) => {
 			if (!ex.hasSpent) unspent.push(ex);
 		});
-
-		console.log(unspent);
 
 		const result = {
 			potentialXp,
