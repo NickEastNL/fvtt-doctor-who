@@ -121,27 +121,6 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		});
 		const totalCost = distinctionCost + gadgetCost;
 
-		// Object.values(parent.itemTypes.distinction).forEach((d) => {
-		// 	const modifiers = d.system.modifiers;
-		// 	const types = ['attribute_points', 'skill_points', 'attribute_cap', 'skill_cap'];
-
-		// 	for (const mod of modifiers) {
-		// 		if (!types.includes(mod.id)) return;
-
-		// 		if (mod.id === 'attribute_cap') {
-		// 			finalMods[mod.id] = SYSTEM.ATTRIBUTE_RULES.MAX_CAP;
-		// 		}
-
-		// 		if (mod.id === 'skill_cap') {
-		// 			finalMods[mod.id] = SYSTEM.SKILL_RULES.MAX_CAP;
-		// 		}
-
-		// 		if (mod.value > 0) {
-		// 			finalMods[mod.id] += mod.value;
-		// 		}
-		// 	}
-		// });
-
 		let attributePointsSpent = 0;
 		Object.values(this.attributes).forEach((a) => {
 			attributePointsSpent += a.base;

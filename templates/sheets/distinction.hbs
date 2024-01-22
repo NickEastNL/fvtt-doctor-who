@@ -5,11 +5,6 @@
 		</h1>
 	</header>
 
-	{{!-- <nav class="sheet-tabs tabs">
-		<a class="item" data-tab="description">Description</a>
-		<a class="item" data-tab="modifiers">Modifiers</a>
-	</nav> --}}
-
 	<section class="tab sheet-body flexcol">
 		{{#unless isConfig}}
 		{{editor description target="system.description" button=true engine="prosemirror"}}
@@ -17,24 +12,4 @@
 		{{editor description target="description" button=true engine="prosemirror"}}
 		{{/unless}}
 	</section>
-
-	{{!-- <section class="tab sheet-body" data-tab="modifiers">
-		<div class="modifiers-header flexrow flex-right">
-			<a class="button" data-action="addModifier" data-tooltip="Add Modifier">
-				<i class="far fa-plus-circle"></i>
-			</a>
-		</div>
-
-		{{#each modifiers as |m name|}}
-		<div class="form-group modifier" data-index="{{name}}">
-			<label>{{m.label}}</label>
-			{{#if isNumber}}
-			<input type="{{m.type}}" name="{{name}}" value="{{m.value}}" {{#unless ../isGM}}disabled{{/unless}}>
-			{{/if}}
-			<a class="button" data-action="deleteModifier">
-				<i class="far fa-minus-circle"></i>
-			</a>
-		</div>
-		{{/each}}
-	</section> --}}
 </form>
