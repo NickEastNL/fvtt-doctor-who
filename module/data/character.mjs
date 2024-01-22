@@ -99,6 +99,21 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			})
 		);
 
+		schema.experience = new fields.SchemaField({
+			xpSpent: new fields.NumberField({
+				...requiredInteger,
+				initial: 0,
+				min: 0,
+			}),
+			entries: new fields.ArrayField(
+				new fields.SchemaField({
+					label: new fields.StringField({ required: true, initial: '' }),
+					hasRecalled: new fields.BooleanField(),
+					hasSpent: new fields.BooleanField(),
+				})
+			),
+		});
+
 		return schema;
 	}
 
@@ -106,12 +121,6 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 
 	prepareBaseData() {
 		const parent = this.parent;
-		const finalMods = {
-			attribute_points: 0,
-			skill_points: 0,
-			attribute_cap: SYSTEM.ATTRIBUTE_RULES.MAX_CAP,
-			skill_cap: SYSTEM.SKILL_RULES.MAX_CAP,
-		};
 
 		const distinctionCost =
 			parent.itemTypes.distinction.length * SYSTEM.STORY_POINTS.DISTINCTION_COST;
@@ -132,16 +141,29 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			skillPointsSpent += s.specialisations.length;
 		});
 
+		let potentialXp = 0;
+		for (const ex of this.experience.entries) {
+			if (ex.hasSpent) continue;
+			potentialXp += ex.hasRecalled ? 2 : 1;
+		}
+
+		let availableXp = 0;
+		for (const ex of this.experience.entries) {
+			if (ex.hasSpent) availableXp++;
+		}
+
 		this.derivedPoints = {
 			storyPoints: SYSTEM.STORY_POINTS.BASE - totalCost,
 			attributes: {
-				cap: finalMods.attribute_cap,
-				pool: SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS + finalMods.attribute_points,
+				cap: SYSTEM.ATTRIBUTE_RULES.MAX_CAP,
+				pool: SYSTEM.ATTRIBUTE_RULES.DEFAULT_POINTS,
 			},
 			skills: {
-				cap: finalMods.skill_cap,
-				pool: SYSTEM.SKILL_RULES.DEFAULT_POINTS + finalMods.skill_points,
+				cap: SYSTEM.SKILL_RULES.MAX_CAP,
+				pool: SYSTEM.SKILL_RULES.DEFAULT_POINTS,
 			},
+			potentialXp,
+			availableXp: availableXp - this.experience.xpSpent,
 		};
 
 		this.derivedPoints.attributes.spent = attributePointsSpent;

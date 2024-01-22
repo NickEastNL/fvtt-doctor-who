@@ -1,4 +1,4 @@
-import { EmbeddedObjectConfig, SkillConfig } from '../_module.mjs';
+import { EmbeddedObjectConfig, ExperienceConfig, SkillConfig } from '../_module.mjs';
 
 export default class CharacterSheet extends ActorSheet {
 	static get defaultOptions() {
@@ -21,7 +21,7 @@ export default class CharacterSheet extends ActorSheet {
 		});
 	}
 
-	async getData(options) {
+	getData(options) {
 		const data = super.getData(options);
 		const actor = (data.actor = data.document);
 
@@ -38,6 +38,7 @@ export default class CharacterSheet extends ActorSheet {
 
 		data.equipment = actor.equipment;
 		data.conditions = actor.system.conditions;
+		data.experience = this.#formatExperiences(actor.system.experience);
 
 		return data;
 	}
@@ -118,6 +119,28 @@ export default class CharacterSheet extends ActorSheet {
 		return result;
 	}
 
+	#formatExperiences(experience) {
+		const data = foundry.utils.deepClone(experience);
+		const potentialXp = this.actor.system.derivedPoints.potentialXp;
+		const availableXp = this.actor.system.derivedPoints.availableXp;
+
+		let unspent = [];
+		data.entries.forEach((ex) => {
+			if (!ex.hasSpent) unspent.push(ex);
+		});
+
+		console.log(unspent);
+
+		const result = {
+			potentialXp,
+			availableXp,
+			xpSpent: data.xpSpent,
+			entries: unspent,
+		};
+
+		return result;
+	}
+
 	activateListeners(html) {
 		super.activateListeners(html);
 		html.find('[data-action]').click(this._onClickControl.bind(this));
@@ -194,6 +217,25 @@ export default class CharacterSheet extends ActorSheet {
 				const itemId = dataset.itemId;
 				const type = dataset.type;
 				return this.#editEquipment('delete', type, itemId);
+			}
+
+			// Modify Experiences
+			case 'addExperience':
+				return this.actor.editExperience();
+			case 'editExperience': {
+				const index = b.closest('.experience').dataset.index;
+				return this.actor.editExperience('edit', index);
+			}
+			case 'deleteExperience': {
+				const index = b.closest('.experience').dataset.index;
+				return this.actor.editExperience('delete', index);
+			}
+			case 'recallExperience': {
+				const index = b.closest('.experience').dataset.index;
+				return this.actor.editExperience('recall', index);
+			}
+			case 'configExperience': {
+				return new ExperienceConfig(this.actor).render(true);
 			}
 
 			// Modify Conditions

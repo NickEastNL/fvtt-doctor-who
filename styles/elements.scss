@@ -60,6 +60,10 @@
 		justify-content: flex-end;
 	}
 
+	.flex-stretch {
+		align-items: stretch;
+	}
+
 	a {
 		&.button {
 			flex: none;

@@ -1,0 +1,88 @@
+<form class="flexcol">
+	<header class="sheet-header">
+		<h1>Experience</h1>
+	</header>
+
+	<section class="sheet-body flexcol">
+		<div class="score-row">
+			<div class="score">
+				<a class="stat-control {{#unless canDecrease}}inactive{{/unless}}" data-action="refundXp">
+					<i class="fas fa-caret-left"></i>
+				</a>
+				<span class="stat-counter">{{xpSpent}}</span>
+				<a class="stat-control {{#unless canIncrease}}inactive{{/unless}}" data-action="spendXp">
+					<i class="fas fa-caret-right"></i>
+				</a>
+				<label>Spent XP</label>
+			</div>
+
+			<div class="score">
+				<label>Available XP</label>
+				<span class="stat-counter">{{availableXp}}</span>
+			</div>
+		</div>
+
+		<div class="flexrow flex-stretch">
+			<div class="column column-left">
+				<div class="section-header">
+					<h2>Unspent</h2>
+					<div class="score float-right">
+						<span>{{potentialXp}}</span>
+					</div>
+				</div>
+
+				<ol class="item-list">
+					{{#each unspent as |ex|}}
+					<li class="list-item experience" data-index="{{@index}}">
+						{{#if ex.hasRecalled}}
+						<i class="fas fa-check"></i>
+						{{/if}}
+						<span>{{ex.label}}</span>
+						<div class="flexrow">
+							<a class="button" data-action="spendExperience">
+								<i class="fas fa-coins"></i>
+							</a>
+							<a class="button" data-action="editExperience">
+								<i class="fas fa-pen-to-square"></i>
+							</a>
+							{{#unless ../isLocked}}
+							<a class="button" data-action="deleteExperience">
+								<i class="far fa-circle-minus"></i>
+							</a>
+							{{/unless}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+
+			<div class="column column-right">
+				<h2 class="section-header">Spent</h2>
+
+				<ol class="item-list">
+					{{#each spent as |ex|}}
+					<li class="list-item experience" data-index="{{@index}}">
+						{{#if ex.hasRecalled}}
+						<i class="fas fa-check"></i>
+						{{/if}}
+						<span>{{ex.label}}</span>
+						<div class="flexrow">
+							<a class="button" data-action="spendExperience">
+								<i class="fas fa-coins"></i>
+							</a>
+							<a class="button" data-action="editExperience">
+								<i class="fas fa-pen-to-square"></i>
+							</a>
+							{{#unless ../isLocked}}
+							<a class="button" data-action="deleteExperience">
+								<i class="far fa-circle-minus"></i>
+							</a>
+							{{/unless}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+		</div>
+	</section>
+</form>

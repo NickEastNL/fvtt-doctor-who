@@ -16,10 +16,6 @@
 		}
 	}
 
-	.sheet-body {
-		align-items: stretch;
-	}
-
 	.form-group-stacked {
 		flex-direction: column;
 		align-items: initial;
@@ -107,6 +103,13 @@
 		}
 	}
 
+	.column-left {
+		flex: 1;
+		margin-right: var(--margin-size-normal);
+		padding-right: var(--margin-size-normal);
+		border-right: 1px solid black;
+	}
+
 	// Stat control blocks
 	.stat-controls {
 		flex: 0;
@@ -187,6 +190,14 @@
 
 		.damage-normal {
 			font-weight: bold;
+		}
+	}
+
+	.experience {
+		justify-content: flex-start;
+
+		span {
+			flex: 1;
 		}
 	}
 }

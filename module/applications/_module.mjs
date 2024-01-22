@@ -1,4 +1,5 @@
 export { default as EmbeddedObjectConfig } from './config/embedded-object.mjs';
+export { default as ExperienceConfig } from './config/experience.mjs';
 export { default as SkillConfig } from './config/skill.mjs';
 
 export { default as CharacterSheet } from './sheets/character.mjs';

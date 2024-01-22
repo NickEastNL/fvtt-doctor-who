@@ -22,14 +22,6 @@
 			}
 		}
 
-		// .focus {
-		// 	> span {
-		// 		display: flex;
-		// 		align-items: center;
-		// 		gap: 4px;
-		// 	}
-		// }
-
 		.focus,
 		.homeworld {
 			gap: var(--margin-size-normal);
@@ -43,9 +35,6 @@
 
 	.column-left {
 		flex: 1.1;
-		margin-right: var(--margin-size-normal);
-		padding-right: var(--margin-size-normal);
-		border-right: 1px solid black;
 	}
 
 	.story-points {

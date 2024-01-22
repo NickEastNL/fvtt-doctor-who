@@ -102,7 +102,7 @@
 	</section>
 
 	{{!-- Main Body --}}
-	<div class="sheet-body flexrow">
+	<div class="sheet-body flexrow flex-stretch">
 
 		{{!-- Left Column --}}
 		<section class="column column-left flexcol">
@@ -222,7 +222,7 @@
 
 				<ol class="item-list">
 					{{#each distinctions as |d|}}
-					<li class="item distinction" data-item-id="{{d._id}}">
+					<li class="item list-item distinction" data-item-id="{{d._id}}">
 						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction" data-tooltip="{{d.system.description}}">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
 						<div>
 							{{#unless ../isLocked}}
@@ -253,17 +253,39 @@
 
 				<div class="score-row">
 					<div class="score">
-						<span class="stat-counter"></span>
+						<span class="stat-counter">{{experience.xpSpent}}</span>
 						<label>Spent XP</label>
 					</div>
 
 					<div class="score">
-						<label>Available XP</label>
-						<span class="stat-counter"></span>
+						<label>Potential XP</label>
+						<span class="stat-counter">{{experience.potentialXp}}</span>
 					</div>
 				</div>
 
-				<ol></ol>
+				<ol class="item-list">
+					{{#each experience.entries as |ex|}}
+					<li class="list-item experience" data-index="{{@index}}">
+						{{#if ex.hasRecalled}}
+						<i class="fas fa-check"></i>
+						{{/if}}
+						<span>{{ex.label}}</span>
+						<div class="flexrow">
+							<a class="button" data-action="recallExperience">
+								<i class="fas fa-thought-bubble"></i>
+							</a>
+							<a class="button" data-action="editExperience">
+								<i class="fas fa-pen-to-square"></i>
+							</a>
+							{{#unless ../isLocked}}
+							<a class="button" data-action="deleteExperience">
+								<i class="far fa-circle-minus"></i>
+							</a>
+							{{/unless}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
 			</div>
 
 			{{!-- Equipment --}}
@@ -334,9 +356,9 @@
 
 				<ol class="item-list">
 					{{#each conditions as |c|}}
-					<li class="item condition" data-index="{{@index}}">
+					<li class="list-item condition" data-index="{{@index}}">
 						<span>{{c}}</span>
-						<div>
+						<div class="flexrow">
 							<a class="button" data-action="editCondition">
 								<i class="fas fa-pen-to-square"></i>
 							</a>
