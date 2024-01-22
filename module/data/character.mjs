@@ -109,8 +109,8 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 		const finalMods = {
 			attribute_points: 0,
 			skill_points: 0,
-			attribute_cap: SYSTEM.ATTRIBUTE_RULES.DEFAULT_CAP,
-			skill_cap: SYSTEM.SKILL_RULES.DEFAULT_CAP,
+			attribute_cap: SYSTEM.ATTRIBUTE_RULES.MAX_CAP,
+			skill_cap: SYSTEM.SKILL_RULES.MAX_CAP,
 		};
 
 		const distinctionCost =

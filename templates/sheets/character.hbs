@@ -214,12 +214,14 @@
 
 				<ol class="item-list">
 					{{#each distinctions as |d|}}
-					<li class="list-item distinction" data-item-id="{{d._id}}">
+					<li class="item distinction" data-item-id="{{d._id}}">
 						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction" data-tooltip="{{d.system.description}}">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
 						<div>
+							{{#unless ../isLocked}}
 							<a class="button" data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
 							</a>
+							{{/unless}}
 						</div>
 					</li>
 					{{/each}}
@@ -268,7 +270,7 @@
 					{{/each}}
 
 					{{#each equipment.gadgets as |gadget|}}
-					<li class="list-item gadget" data-item-id="{{gadget._id}}" data-type="gadget">
+					<li class="item list-item gadget" data-item-id="{{gadget._id}}" data-type="gadget">
 						<a data-action="editEquipment" data-tooltip="{{gadget.system.description}}">
 							<i class="fas fa-wrench"></i>
 							<span>{{gadget.name}}</span>
@@ -282,7 +284,7 @@
 					{{/each}}
 
 					{{#each equipment.weapons as |weapon|}}
-					<li class="list-item weapon" data-item-id="{{weapon._id}}" data-type="weapon">
+					<li class="item list-item weapon" data-item-id="{{weapon._id}}" data-type="weapon">
 						<a data-action="editEquipment" data-tooltip="{{weapon.system.description}}">
 							<i class="fas fa-raygun"></i>
 							<span>{{weapon.name}}</span>
@@ -310,7 +312,7 @@
 
 				<ol class="item-list">
 					{{#each conditions as |c|}}
-					<li class="list-item condition" data-index="{{@index}}">
+					<li class="item condition" data-index="{{@index}}">
 						<span>{{c}}</span>
 						<div>
 							<a class="button" data-action="editCondition">

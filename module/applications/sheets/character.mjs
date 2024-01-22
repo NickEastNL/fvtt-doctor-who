@@ -139,12 +139,6 @@ export default class CharacterSheet extends ActorSheet {
 			case 'storyPointsDecrease':
 				return this.actor.updateStoryPoints(-1);
 
-			// Transfer Attribute Points
-			case 'transferAttrPoints':
-				return this.#transferAttrPoints(1);
-			case 'restoreAttrPoints':
-				return this.#transferAttrPoints(-1);
-
 			// Adjust Attribute
 			case 'attributeIncreaseBase': {
 				const attribute = b.closest('.attribute').dataset.attribute;
@@ -217,13 +211,8 @@ export default class CharacterSheet extends ActorSheet {
 		}
 	}
 
-	async #transferAttrPoints(delta = 1) {
-		delta = Math.sign(delta);
-		const current = this.actor.system.transferredPoints;
-
-		if (!delta) return;
-
-		this.actor.update({ 'system.transferredPoints': current + delta });
+	_canDragDrop(selector) {
+		return !this.actor.system.isLocked && super._canDragDrop(selector);
 	}
 
 	async #editDistinction(action = 'add', itemId = null) {

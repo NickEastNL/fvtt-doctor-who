@@ -39,7 +39,7 @@ export default class WeaponModel extends foundry.abstract.TypeDataModel {
 
 		if (this.damageType === 'lethal') {
 			this.damage = {
-				low: this.baseDamage,
+				low: Math.floor(this.baseDamage / 2),
 				normal: 'L',
 				high: 'L',
 			};
