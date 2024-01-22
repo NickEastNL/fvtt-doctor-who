@@ -26,18 +26,16 @@ export default class CharacterSheet extends ActorSheet {
 		const actor = (data.actor = data.document);
 
 		data.isGM = game.user.isGM;
-		data.isUnlocked = actor.system.isUnlocked;
+		data.isLocked = actor.system.isLocked;
 		data.focus = foundry.utils.deepClone(actor.system.focus);
 		data.focus.intensity = SYSTEM.GENERAL_RULES.FOCUS_INTENSITY[data.focus.intensity];
 
 		data.storyPoints = this.#formatStoryPoints();
 
-		// TODO: Add modifiers from XP spends.
 		data.attributes = this.#formatAttributes(actor.system.attributes);
 		data.skills = this.#formatSkills(actor.system.skills);
 
-		data.distinctions = this.#formatDistinctions(actor.distinctions);
-		data.maxDistinctions = data.distinctions.length >= 2 && !data.isUnlocked;
+		data.distinctions = actor.distinctions;
 
 		data.equipment = actor.equipment;
 		data.conditions = actor.system.conditions;
@@ -60,26 +58,23 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	#formatAttributes(source) {
-		const isUnlocked = this.actor.system.isUnlocked;
+		const isLocked = this.actor.system.isLocked;
 		const derivedPoints = this.actor.system.derivedPoints;
-		const availablePoints = derivedPoints.attributes.available;
-		const hasPoints = availablePoints > 0;
+		const spentPoints = derivedPoints.attributes.spent;
 
 		const result = {};
-		result.hasPoints = hasPoints;
-		result.availablePoints = availablePoints;
+		result.spentPoints = spentPoints;
 		result.transferredPoints = this.actor.system.transferredPoints;
 		result.values = Object.values(SYSTEM.ATTRIBUTES).map((cfg) => {
 			const attribute = foundry.utils.deepClone(cfg);
 			attribute.base = source[attribute.id].base;
 			attribute.current = source[attribute.id].current;
 
-			if (
-				(isUnlocked && attribute.base < 10) ||
-				(attribute.base < derivedPoints.attributes.cap && hasPoints)
-			)
-				attribute.canIncreaseBase = true;
-			if (attribute.base > 1) attribute.canDecreaseBase = true;
+			if (!isLocked) {
+				if (attribute.base < derivedPoints.attributes.cap)
+					attribute.canIncreaseBase = true;
+				if (attribute.base > 1) attribute.canDecreaseBase = true;
+			}
 
 			if (attribute.current < attribute.base) attribute.canIncreaseCur = true;
 			if (attribute.current > 0) attribute.canDecreaseCur = true;
@@ -102,41 +97,26 @@ export default class CharacterSheet extends ActorSheet {
 	}
 
 	#formatSkills(source) {
-		const isUnlocked = this.actor.system.isUnlocked;
+		const isLocked = this.actor.system.isLocked;
 		const derivedPoints = this.actor.system.derivedPoints.skills;
-		const availablePoints = derivedPoints.available;
-		const hasPoints = availablePoints > 0;
+		const spentPoints = derivedPoints.spent;
 
 		const result = {};
-		result.hasPoints = hasPoints;
-		result.availablePoints = availablePoints;
-		result.canTransfer = this.actor.system.transferredPoints > 0 && hasPoints;
+		result.spentPoints = spentPoints;
 		result.values = Object.values(SYSTEM.SKILLS).map((cfg) => {
 			const skill = foundry.utils.deepClone(cfg);
 			skill.base = source[skill.id].base;
 			skill.specialisations = source[skill.id].specialisations;
 
-			if (isUnlocked || (skill.base < derivedPoints.cap && hasPoints))
-				skill.canIncrease = true;
-			if (skill.base > 0) skill.canDecrease = true;
+			if (!isLocked) {
+				if (skill.base < derivedPoints.cap) skill.canIncrease = true;
+				if (skill.base > 0) skill.canDecrease = true;
+			}
 
 			return skill;
 		});
 
 		return result;
-	}
-
-	#formatDistinctions(distinctions) {
-		return Object.values(distinctions).map((src) => {
-			const distinction = foundry.utils.deepClone(src);
-			// const modifiers = distinction.system.modifiers;
-
-			// distinction.modifier = Object.values(modifiers).some(
-			// 	(mod) => mod.value > 0 || ['attribute_cap', 'skill_cap'].includes(mod.id)
-			// );
-
-			return distinction;
-		});
 	}
 
 	activateListeners(html) {
@@ -148,9 +128,9 @@ export default class CharacterSheet extends ActorSheet {
 		event.preventDefault();
 		const b = event.currentTarget;
 		switch (b.dataset.action) {
-			case 'unlockLimits': {
-				const isUnlocked = this.actor.system.isUnlocked;
-				return this.actor.update({ 'system.isUnlocked': !isUnlocked });
+			case 'lockSheet': {
+				const isLocked = this.actor.system.isLocked;
+				return this.actor.update({ 'system.isLocked': !isLocked });
 			}
 
 			// Adjust Story Points
@@ -302,6 +282,7 @@ export default class CharacterSheet extends ActorSheet {
 				const d = new Dialog(
 					{
 						title: 'Create Equipment',
+						content: '<p>Choose what type of equipment you want to add.</p>',
 						buttons: {
 							equipment: {
 								icon: '<i class="fas fa-backpack"></i>',

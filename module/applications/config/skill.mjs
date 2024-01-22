@@ -27,19 +27,16 @@ export default class SkillConfig extends FormApplication {
 	}
 
 	async getData() {
-		const isUnlocked = this.actor.system.isUnlocked;
+		const isLocked = this.actor.system.isLocked;
 		const skill = this.actor.skills[this.skillId];
-		const skillPoints = this.actor.system.derivedPoints.skills.available;
 		const data = {
 			skill,
-			skillPoints,
-			isUnlocked,
-			hasPoints: skillPoints > 0,
+			isLocked,
 			hasMinimumScore: skill.base >= 3,
 			config: this.config,
 		};
 
-		data.canAddSpecs = (isUnlocked || data.hasPoints) && data.hasMinimumScore;
+		data.canAddSpecs = !isLocked && data.hasMinimumScore;
 
 		return data;
 	}

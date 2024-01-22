@@ -10,7 +10,7 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			integer: true,
 		};
 
-		schema.isUnlocked = new fields.BooleanField({
+		schema.isLocked = new fields.BooleanField({
 			initial: false,
 		});
 
@@ -144,18 +144,7 @@ export default class CharacterModel extends foundry.abstract.TypeDataModel {
 			},
 		};
 
-		this.derivedPoints.attributes.available =
-			this.derivedPoints.attributes.pool - attributePointsSpent;
-		this.derivedPoints.skills.available =
-			this.derivedPoints.skills.pool - skillPointsSpent;
-
-		// If true, transfer the available attribute points to skill points
-		if (
-			this.transferredPoints > 0 &&
-			this.derivedPoints.attributes.available >= this.transferredPoints
-		) {
-			this.derivedPoints.skills.available += this.transferredPoints;
-			this.derivedPoints.attributes.available -= this.transferredPoints;
-		}
+		this.derivedPoints.attributes.spent = attributePointsSpent;
+		this.derivedPoints.skills.spent = skillPointsSpent;
 	}
 }

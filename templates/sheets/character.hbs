@@ -10,15 +10,15 @@
 					<input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
 
 					{{#if isGM}}
-					{{#unless isUnlocked}}
-					<a class="button lock" data-tooltip="Unlock Limitations" data-action="unlockLimits">
+					{{#if isLocked}}
+					<a class="button lock" data-tooltip="Unlock Sheet" data-action="lockSheet">
 						<i class="fas fa-lock-open"></i>
 					</a>
 					{{else}}
-					<a class="button lock" data-tooltip="Lock Limitations" data-action="unlockLimits">
+					<a class="button lock" data-tooltip="Lock Sheet" data-action="lockSheet">
 						<i class="fas fa-lock"></i>
 					</a>
-					{{/unless}}
+					{{/if}}
 					{{/if}}
 				</h1>
 
@@ -110,14 +110,9 @@
 
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
-					{{#unless isUnlocked}}
+					{{#unless isLocked}}
 					<div class="float-right">
-						<span class="stat-counter" data-tooltip="Available Points: {{attributes.availablePoints}}<hr/>Transferred Points: {{attributes.transferredPoints}}">{{attributes.availablePoints}}</span>
-						{{#if attributes.hasPoints}}
-						<a class="counter-transfer" data-tooltip="Send to Skill Points" data-action="transferAttrPoints">
-							<i class="fas fa-arrow-down"></i>
-						</a>
-						{{/if}}
+						<span class="stat-counter" data-tooltip="Spent Points">{{attributes.spentPoints}}</span>
 					</div>
 					{{/unless}}
 				</div>
@@ -159,14 +154,9 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
-					{{#unless isUnlocked}}
+					{{#unless isLocked}}
 					<div class="float-right">
-						<span class="stat-counter" data-tooltip="Available Points">{{skills.availablePoints}}</span>
-						{{#if skills.canTransfer}}
-						<a class="counter-transfer" data-tooltip="Restore Attribute Points" data-action="restoreAttrPoints">
-							<i class="fas fa-arrow-up"></i>
-						</a>
-						{{/if}}
+						<span class="stat-counter" data-tooltip="Spent Points">{{skills.spentPoints}}</span>
 					</div>
 					{{/unless}}
 				</div>
@@ -215,7 +205,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Distinctions"}}</h2>
 
-					{{#unless maxDistinctions}}
+					{{#unless isLocked}}
 					<a class="button float-right" data-action="addDistinction">
 						<i class="far fa-circle-plus"></i>
 					</a>
