@@ -2,7 +2,7 @@
 	"id": "doctor-who",
 	"title": "Doctor Who The Roleplaying Game",
 	"description": "Unofficial implementation of the Doctor Who Roleplaying Game from Cubicle 7.",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"manifest": "#{MANIFEST}#",
 	"download": "#{DOWNLOAD}#",
 	"url": "https://foundryvtt.com/packages/doctor-who",
