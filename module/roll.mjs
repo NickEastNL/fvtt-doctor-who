@@ -55,6 +55,13 @@ export default class DwRoll extends Roll {
 			if (data.favor === 'disadv') modifier = 'kl2';
 		}
 
+		if (data.isReaction && data.sourceRoll) {
+			if (data.favor === data.sourceRoll.favor) {
+				pool = 2;
+				modifier = '';
+			}
+		}
+
 		const terms = [`${pool}d6${modifier}`, data.attributeScore, data.skillScore];
 		if (data.bonusDice > 0) terms.push(`${data.bonusDice}d6`);
 		if (data.bonusModifier > 0) terms.push(data.bonusModifier);

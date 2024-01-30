@@ -25,13 +25,19 @@ export default async function contestedRoll(msg, html) {
 
 	html.find('[data-action="roll"]').on('click', async (event) => {
 		event.preventDefault();
+		console.debug(flags);
 		const targetRoll = await RollDialog.show({
 			actor: targetActor,
 			target: sourceActor,
+			sourceRoll: flags.sourceRoll,
 			isReaction: true,
 		});
 
 		if (!targetRoll) return;
+
+		if (flags.sourceRoll.favor === targetRoll.data.favor) {
+			flags.sourceRoll.favor = 'none';
+		}
 
 		flags.sourceRoll.difficulty = targetRoll.total;
 		const sourceRoll = new DwRoll(flags.sourceRoll);

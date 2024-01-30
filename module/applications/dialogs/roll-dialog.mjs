@@ -3,11 +3,13 @@ import DwRoll from '../../roll.mjs';
 
 export default class RollDialog extends Dialog {
 	constructor(data, options) {
+		console.debug(data);
 		super(data, options);
 
-		const { actor, target, isReaction } = data;
+		const { actor, target, sourceRoll, isReaction } = data;
 		this.actor = actor;
 		this.target = target;
+		this.sourceRoll = sourceRoll;
 		this.isReaction = isReaction;
 	}
 
@@ -64,6 +66,7 @@ export default class RollDialog extends Dialog {
 		const fd = new FormDataExtended(form);
 		const data = fd.object;
 
+		data.sourceRoll = this.sourceRoll;
 		data.isReaction = this.isReaction;
 		data.attributeScore = this.actor.system.attributes[data.attribute].current;
 		data.skillScore = this.actor.system.skills[data.skill].base;
@@ -112,13 +115,11 @@ export default class RollDialog extends Dialog {
 		return roll;
 	}
 
-	static async show({ actor, target, isReaction = false } = {}) {
-		target ??= game.user.targets.first();
+	static async show(config = {}) {
+		config.target ??= game.user.targets.first();
 
 		return this.wait({
-			actor,
-			target,
-			isReaction,
+			...config,
 			close: () => {
 				return null;
 			},
