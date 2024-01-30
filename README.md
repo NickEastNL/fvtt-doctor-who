@@ -31,6 +31,10 @@ Please note that this system only provides character sheets and core mechanics t
 - Conflict tracking
 - Chase tracking
 
+&copy; Cubicle 7 Entertainment 2024 | Doctor Who &copy; BBC 2024
+
+This content is not supported nor endorsed by either Cubicle 7 or the BBC. All rights reserved.
+
 [Foundry Shield 11]: https://img.shields.io/badge/Foundry-11-informational
 [Foundry URL]: https://foundryvtt.com
 
