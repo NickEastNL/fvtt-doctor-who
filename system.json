@@ -1,7 +1,7 @@
 {
 	"id": "doctor-who",
-	"title": "Doctor Who The Roleplaying Game",
-	"description": "Unofficial implementation of the Doctor Who Roleplaying Game from Cubicle 7.",
+	"title": "Doctor Who: The Roleplaying Game",
+	"description": "Unofficial implementation of the Doctor Who roleplaying game from Cubicle 7.",
 	"version": "0.1.0",
 	"manifest": "#{MANIFEST}#",
 	"download": "#{DOWNLOAD}#",
