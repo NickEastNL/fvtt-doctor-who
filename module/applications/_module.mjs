@@ -1,8 +1,10 @@
-export { default as EmbeddedObjectConfig } from './config/embedded-object.mjs';
-export { default as ExperienceConfig } from './config/experience.mjs';
-export { default as SkillConfig } from './config/skill.mjs';
+export { default as EmbeddedObjectConfig } from './config/embedded-object-config.mjs';
+export { default as ExperienceConfig } from './config/experience-config.mjs';
+export { default as SkillConfig } from './config/skill-config.mjs';
 
-export { default as CharacterSheet } from './sheets/character.mjs';
-export { default as DistinctionSheet } from './sheets/distinction.mjs';
-export { default as GadgetSheet } from './sheets/gadget.mjs';
-export { default as WeaponSheet } from './sheets/weapon.mjs';
+export { default as RollDialog } from './dialogs/roll-dialog.mjs';
+
+export { default as CharacterSheet } from './sheets/character-sheet.mjs';
+export { default as DistinctionSheet } from './sheets/distinction-sheet.mjs';
+export { default as GadgetSheet } from './sheets/gadget-sheet.mjs';
+export { default as WeaponSheet } from './sheets/weapon-sheet.mjs';

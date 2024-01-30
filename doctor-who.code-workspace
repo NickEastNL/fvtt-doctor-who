@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../foundryvtt/resources/app"
+		}
+	],
+	"settings": {
+		"i18n-ally.keystyle": "nested"
+	}
+}

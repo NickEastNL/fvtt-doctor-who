@@ -1,6 +1,12 @@
 @use './variables.scss';
 
 .doctor-who.sheet {
+	select:disabled,
+	input:disabled {
+		opacity: 0.8;
+		color: var(--color-text-dark-primary);
+	}
+
 	.sheet-header {
 		flex: 0;
 		position: relative;
@@ -14,11 +20,6 @@
 				margin: 0;
 			}
 		}
-	}
-
-	.form-group-stacked {
-		flex-direction: column;
-		align-items: initial;
 	}
 
 	nav.sheet-tabs {

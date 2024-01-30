@@ -100,10 +100,19 @@ export const SKILLS = Object.freeze({
 	},
 });
 
-export const WEAPON_TYPES = Object.freeze({
+export const WEAPON_DAMAGE_TYPES = Object.freeze({
 	amount: 'DAMAGE.Amount',
 	stun: 'DAMAGE.Stun',
 	lethal: 'DAMAGE.Lethal',
+});
+
+export const SUCCESS_RESULTS = Object.freeze({
+	0: { id: 'disastrous', label: 'ROLL.Disastrous' },
+	1: { id: 'failure', label: 'ROLL.Failure' },
+	2: { id: 'almost', label: 'ROLL.Almost' },
+	3: { id: 'barely', label: 'ROLL.Barely' },
+	4: { id: 'success', label: 'ROLL.Success' },
+	5: { id: 'brilliant', label: 'ROLL.Brilliant' },
 });
 
 export const SYSTEM = {
@@ -114,5 +123,6 @@ export const SYSTEM = {
 	SKILL_RULES,
 	ATTRIBUTES,
 	SKILLS,
-	WEAPON_TYPES,
+	WEAPON_DAMAGE_TYPES,
+	SUCCESS_RESULTS,
 };

@@ -1,0 +1,13 @@
+<div class="doctor-who contested-message">
+	<div class="message-header">{{localize 'CHAT.ContestedTitle'}}</div>
+	<div class="message-target">
+		<span class="source">{{source}}</span>
+		<span>
+			<i class="fas fa-arrow-down"></i>
+		</span>
+		<span class="target">{{target}}</span>
+	</div>
+	{{#if isOwner}}
+	<button data-action="roll">Roll Reaction</button>
+	{{/if}}
+</div>

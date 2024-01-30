@@ -9,8 +9,8 @@
 				<h1 class="title">
 					<input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
 
-					{{#if isGM}}
-					{{#if isLocked}}
+					{{#if editable}}
+					{{#if locked}}
 					<a class="button lock" data-tooltip="Unlock Sheet" data-action="lockSheet">
 						<i class="fas fa-lock-open"></i>
 					</a>
@@ -72,7 +72,7 @@
 					<span class="stat-counter {{#if storyPoints.overLimit}}over-limit{{/if}}" data-tooltip="Reset to {{storyPoints.base}} next session">
 						{{storyPoints.current}}
 					</span>
-					<a class="stat-control" data-action="storyPointsIncrease">
+					<a class="stat-control {{#unless storyPoints.canIncrease}}inactive{{/unless}}" data-action="storyPointsIncrease">
 						<i class="fas fa-caret-right"></i>
 					</a>
 				</div>
@@ -115,15 +115,17 @@
 			{{!-- Attributes --}}
 			<div class="stat-section attributes-section" data-type="attributes">
 				<div class="section-header flex-center">
+					{{#if editable}}
 					<div class="float-left">
 						<a class="button roll-button" data-tooltip="Roll Dice" data-action="rollDice">
 							<i class="fas fa-dice"></i>
 						</a>
 					</div>
+					{{/if}}
 
 					<h2>{{localize "CHARACTER.Attributes"}}</h2>
 
-					{{#unless isLocked}}
+					{{#unless locked}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Spent Points">{{attributes.spentPoints}}</span>
 					</div>
@@ -167,7 +169,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Skills"}}</h2>
 
-					{{#unless isLocked}}
+					{{#unless locked}}
 					<div class="float-right">
 						<span class="stat-counter" data-tooltip="Spent Points">{{skills.spentPoints}}</span>
 					</div>
@@ -218,7 +220,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Distinctions"}}</h2>
 
-					{{#unless isLocked}}
+					{{#unless locked}}
 					<a class="button float-right" data-action="addDistinction">
 						<i class="far fa-circle-plus"></i>
 					</a>
@@ -230,7 +232,7 @@
 					<li class="item list-item distinction" data-item-id="{{d._id}}">
 						<a class="{{#if d.modifier}}modifiers{{/if}}" data-action="editDistinction" data-tooltip="{{d.system.description}}">{{d.name}} {{#if d.modifier}}&dagger;{{/if}}</a>
 						<div>
-							{{#unless ../isLocked}}
+							{{#unless ../locked}}
 							<a class="button" data-action="deleteDistinction">
 								<i class="far fa-circle-minus"></i>
 							</a>
@@ -246,6 +248,7 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Experiences"}}</h2>
 
+					{{#if editable}}
 					<div class="float-right">
 						<a class="button" data-action="configExperience">
 							<i class="fas fa-cog"></i>
@@ -254,6 +257,7 @@
 							<i class="far fa-circle-plus"></i>
 						</a>
 					</div>
+					{{/if}}
 				</div>
 
 				<div class="score-row">
@@ -282,7 +286,7 @@
 							<a class="button" data-action="editExperience">
 								<i class="fas fa-pen-to-square"></i>
 							</a>
-							{{#unless ../isLocked}}
+							{{#unless ../locked}}
 							<a class="button" data-action="deleteExperience">
 								<i class="far fa-circle-minus"></i>
 							</a>
@@ -298,9 +302,11 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Equipment"}}</h2>
 
+					{{#if eitable}}
 					<a class="button float-right" data-action="addEquipment">
 						<i class="far fa-circle-plus"></i>
 					</a>
+					{{/if}}
 				</div>
 
 				<ol class="item-list">
@@ -310,11 +316,14 @@
 							<i class="fas fa-backpack"></i>
 							<span>{{equipment.name}}</span>
 						</a>
+
+						{{#if editable}}
 						<div>
 							<a class="button" data-action="deleteEquipment">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>
+						{{/if}}
 					</li>
 					{{/each}}
 
@@ -324,11 +333,14 @@
 							<i class="fas fa-wrench"></i>
 							<span>{{gadget.name}}</span>
 						</a>
+
+						{{#if ../editable}}
 						<div>
 							<a class="button" data-action="deleteEquipment">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>
+						{{/if}}
 					</li>
 					{{/each}}
 
@@ -339,11 +351,14 @@
 							<span>{{weapon.name}}</span>
 							<span class="weapon-damage">({{{weapon.system.damageLabel}}})</span>
 						</a>
+
+						{{#if ../editable}}
 						<div>
 							<a class="button" data-action="deleteEquipment">
 								<i class="far fa-circle-minus"></i>
 							</a>
 						</div>
+						{{/if}}
 					</li>
 					{{/each}}
 				</ol>
@@ -354,9 +369,11 @@
 				<div class="section-header flex-center">
 					<h2>{{localize "CHARACTER.Conditions"}}</h2>
 
+					{{#if editable}}
 					<a class="button float-right" data-action="addCondition">
 						<i class="far fa-circle-plus"></i>
 					</a>
+					{{/if}}
 				</div>
 
 				<ol class="item-list">
@@ -379,6 +396,6 @@
 	</div>
 
 	<div class="tab sheet-body flexrow flex-stretch" data-tab="details">
-		{{editor actor.system.details target="system.details" button=true engine="prosemirror"}}
+		{{editor actor.system.details target="system.details" button=editable engine="prosemirror"}}
 	</div>
 </form>

@@ -6,7 +6,7 @@ export default class DistinctionSheet extends ItemSheet {
 			width: 500,
 			height: 300,
 			classes: [SYSTEM.id, 'sheet', 'item', 'distinction'],
-			template: `systems/${SYSTEM.id}/templates/sheets/distinction.hbs`,
+			template: `systems/${SYSTEM.id}/templates/sheets/distinction-sheet.hbs`,
 			tabs: [
 				{
 					navSelector: '.tabs',

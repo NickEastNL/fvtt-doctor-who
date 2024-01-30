@@ -10,7 +10,7 @@ export default class ExperienceConfig extends FormApplication {
 			width: 500,
 			height: 500,
 			classes: [SYSTEM.id, 'sheet', 'experience'],
-			template: `systems/${SYSTEM.id}/templates/config/experience.hbs`,
+			template: `systems/${SYSTEM.id}/templates/config/experience-config.hbs`,
 			resizable: false,
 			submitOnChange: true,
 			closeOnSubmit: false,

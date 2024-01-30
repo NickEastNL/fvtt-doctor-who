@@ -4,7 +4,7 @@ export default class WeaponSheet extends ItemSheet {
 			width: 500,
 			height: 400,
 			classes: [SYSTEM.id, 'sheet', 'item', 'weapon'],
-			template: `systems/${SYSTEM.id}/templates/sheets/weapon.hbs`,
+			template: `systems/${SYSTEM.id}/templates/sheets/weapon-sheet.hbs`,
 			resizable: false,
 		});
 	}
@@ -15,7 +15,7 @@ export default class WeaponSheet extends ItemSheet {
 		data.damageLabel = this.item.system.damageLabel;
 		data.baseDamage = this.item.system.baseDamage;
 		data.damageType = this.item.system.damageType;
-		data.choices = SYSTEM.WEAPON_TYPES;
+		data.choices = SYSTEM.WEAPON_DAMAGE_TYPES;
 
 		data.isAmount = data.damageType === 'amount' || data.damageType === 'lethal';
 

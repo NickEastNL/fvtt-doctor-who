@@ -1,11 +1,15 @@
 {
 	"TYPES": {
-		"Actor.character": "Character",
-
-		"Item.distinction": "Distinction",
-		"Item.equipment": "Equipment",
-		"Item.gadget": "Gadget",
-		"Item.weapon": "Weapon"
+		"Actor": {
+			"character": "Character",
+			"npc": "NPC"
+		},
+		"Item": {
+			"distinction": "Distinction",
+			"equipment": "Equipment",
+			"gadget": "Gadget",
+			"weapon": "Weapon"
+		}
 	},
 
 	"SHEETS": {
@@ -16,7 +20,11 @@
 	},
 
 	"DOCTORWHO": {
-		"StoryPoints": "Story Points"
+		"StoryPoints": "Story Points",
+		"Attribute": "Attribute",
+		"Attributes": "Attributes",
+		"Skill": "Skill",
+		"Skills": "Skills"
 	},
 
 	"FOCUS": {
@@ -76,8 +84,7 @@
 	"DIALOGS": {
 		"EditSkill": "Edit Skill",
 		"EditSkillTitle": "[{actor}] Edit Skill ({skill})",
-		"ConfigExperienceTitle": "[{actor}] Experience",
-
+		"ConfigExperienceTitle": "[{actor}] Experiences",
 		"AddSpecialisation": "Add Specialisation",
 		"EditSpecialisation": "Edit Specialisation",
 		"AddDistinction": "Add Distinction",
@@ -86,5 +93,24 @@
 		"EditExperience": "Edit Experience",
 		"AddCondition": "Add Condition",
 		"EditCondition": "Edit Condition"
+	},
+
+	"ROLL": {
+		"DiceTotal": "Dice Total",
+		"Pool": "Pool",
+		"BonusDice": "Bonus Dice",
+		"SituationalBonus": "Situational Bonus",
+
+		"Disastrous": "Disastrous",
+		"Failure": "Failure",
+		"Almost": "Almost",
+		"Barely": "Barely",
+		"Success": "Success",
+		"Brilliant": "Brilliant"
+	},
+
+	"CHAT": {
+		"ContestedTitle": "Contested Roll",
+		"ReactionTitle": "Reaction Roll"
 	}
 }

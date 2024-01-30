@@ -6,7 +6,7 @@ export default class GadgetSheet extends ItemSheet {
 			width: 500,
 			height: 400,
 			classes: [SYSTEM.id, 'sheet', 'item', 'gadget'],
-			template: `systems/${SYSTEM.id}/templates/sheets/gadget.hbs`,
+			template: `systems/${SYSTEM.id}/templates/sheets/gadget-sheet.hbs`,
 			resizable: false,
 		});
 	}

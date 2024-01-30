@@ -12,7 +12,7 @@ export default class SkillConfig extends FormApplication {
 			width: 350,
 			height: 300,
 			classes: [SYSTEM.id, 'sheet', 'skill'],
-			template: `systems/${SYSTEM.id}/templates/config/skill.hbs`,
+			template: `systems/${SYSTEM.id}/templates/config/skill-config.hbs`,
 			resizable: false,
 			submitOnChange: true,
 			closeOnSubmit: false,

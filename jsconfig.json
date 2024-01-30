@@ -1,3 +1,4 @@
 {
-	"include": ["app", "*.mjs"]
+	"include": ["*.mjs", "module", "/home/nick/foundryvtt/resources/app"],
+	"exclude": ["/home/nick/foundryvtt/resources/app/dist"]
 }

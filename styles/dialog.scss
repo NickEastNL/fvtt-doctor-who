@@ -1,8 +1,12 @@
 @use './variables.scss';
 
-.doctor-who.sheet.dialog {
+.doctor-who.dialog {
 	.dialog-content {
 		margin-bottom: var(--margin-size-normal);
+	}
+
+	.dialog-footer {
+		gap: 4px;
 	}
 
 	.sheet-header {
@@ -15,5 +19,11 @@
 
 	.title {
 		text-align: center;
+	}
+
+	.form-group {
+		& > * {
+			flex: 1 1 50%;
+		}
 	}
 }

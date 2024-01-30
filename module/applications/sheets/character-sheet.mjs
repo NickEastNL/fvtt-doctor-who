@@ -1,4 +1,9 @@
-import { EmbeddedObjectConfig, ExperienceConfig, SkillConfig } from '../_module.mjs';
+import {
+	EmbeddedObjectConfig,
+	ExperienceConfig,
+	RollDialog,
+	SkillConfig,
+} from '../_module.mjs';
 
 export default class CharacterSheet extends ActorSheet {
 	static get defaultOptions() {
@@ -8,7 +13,7 @@ export default class CharacterSheet extends ActorSheet {
 			width: 800,
 			height: 750,
 			classes: [SYSTEM.id, 'sheet', 'actor', 'character'],
-			template: `systems/${SYSTEM.id}/templates/sheets/character.hbs`,
+			template: `systems/${SYSTEM.id}/templates/sheets/character-sheet.hbs`,
 			resizable: false,
 			tabs: [
 				{
@@ -26,7 +31,7 @@ export default class CharacterSheet extends ActorSheet {
 		const actor = (data.actor = data.document);
 
 		data.isGM = game.user.isGM;
-		data.isLocked = actor.system.isLocked;
+		data.locked = actor.system.isLocked || !this.isEditable;
 		data.focus = foundry.utils.deepClone(actor.system.focus);
 
 		data.storyPoints = this.#formatStoryPoints();
@@ -51,7 +56,8 @@ export default class CharacterSheet extends ActorSheet {
 			current: storyPoints,
 		};
 
-		if (points.current > 0) points.canDecrease = true;
+		if (this.isEditable && points.current > 0) points.canDecrease = true;
+		if (this.isEditable) points.canIncrease = true;
 		if (points.current > points.base) points.overLimit = true;
 
 		return points;
@@ -70,14 +76,16 @@ export default class CharacterSheet extends ActorSheet {
 			attribute.base = source[attribute.id].base;
 			attribute.current = source[attribute.id].current;
 
-			if (!isLocked) {
+			if (!isLocked && this.isEditable) {
 				if (attribute.base < derivedPoints.attributes.cap)
 					attribute.canIncreaseBase = true;
 				if (attribute.base > 1) attribute.canDecreaseBase = true;
 			}
 
-			if (attribute.current < attribute.base) attribute.canIncreaseCur = true;
-			if (attribute.current > 0) attribute.canDecreaseCur = true;
+			if (this.isEditable) {
+				if (attribute.current < attribute.base) attribute.canIncreaseCur = true;
+				if (attribute.current > 0) attribute.canDecreaseCur = true;
+			}
 
 			attribute.down = attribute.current === 0;
 
@@ -108,7 +116,7 @@ export default class CharacterSheet extends ActorSheet {
 			skill.base = source[skill.id].base;
 			skill.specialisations = source[skill.id].specialisations;
 
-			if (!isLocked) {
+			if (!isLocked && this.isEditable) {
 				if (skill.base < derivedPoints.cap) skill.canIncrease = true;
 				if (skill.base > 0) skill.canDecrease = true;
 			}
@@ -139,19 +147,32 @@ export default class CharacterSheet extends ActorSheet {
 		return result;
 	}
 
+	/**
+	 * @param {JQuery} html
+	 */
 	activateListeners(html) {
 		super.activateListeners(html);
-		html.find('[data-action]').click(this._onClickControl.bind(this));
+		html.find('[data-action]').on('click', this._onClickControl.bind(this));
+
+		if (this.actor.system.isLocked) {
+			html.find('input, button, select').prop('disabled', true);
+		}
 	}
 
 	async _onClickControl(event) {
 		event.preventDefault();
+
+		if (!this.isEditable) return;
+
 		const b = event.currentTarget;
 		switch (b.dataset.action) {
 			case 'lockSheet': {
 				const isLocked = this.actor.system.isLocked;
 				return this.actor.update({ 'system.isLocked': !isLocked });
 			}
+
+			case 'rollDice':
+				return RollDialog.show({ actor: this.actor });
 
 			// Adjust Story Points
 			case 'storyPointsIncrease':

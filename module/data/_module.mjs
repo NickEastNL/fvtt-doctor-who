@@ -1,4 +1,4 @@
-export { default as CharacterModel } from './character.mjs';
-export { default as DistinctionModel } from './distinction.mjs';
-export { default as GadgetModel } from './gadget.mjs';
-export { default as WeaponModel } from './weapon.mjs';
+export { default as CharacterModel } from './character-model.mjs';
+export { default as DistinctionModel } from './distinction-model.mjs';
+export { default as GadgetModel } from './gadget-model.mjs';
+export { default as WeaponModel } from './weapon-model.mjs';

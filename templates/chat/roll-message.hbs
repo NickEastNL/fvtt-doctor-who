@@ -1,0 +1,92 @@
+<div class="dice-roll {{cssClass}}">
+	{{#if data.isReaction}}
+	<div class="roll-type">{{localize "CHAT.ReactionTitle"}}</div>
+	{{/if}}
+
+	<div class="dice-result">
+		<div class="dice-pool flexrow">
+			<label>{{localize "ROLL.Pool"}}</label>
+			{{#each pool}}
+			<div class="die {{#if this.isOne}}rolled-one{{/if}} {{#if this.isSix}}rolled-six{{/if}} {{#if this.discarded}}inactive{{/if}}">
+				{{this.result}}
+			</div>
+			{{/each}}
+		</div>
+
+		{{#if bonusDice}}
+		<div class="dice-pool flexrow">
+			<label>{{localize "ROLL.BonusDice"}}</label>
+			{{#each bonusDice}}
+			<div class="die">
+				{{this.result}}
+			</div>
+			{{/each}}
+		</div>
+		{{/if}}
+
+		<div class="scores">
+			<div class="score">
+				<label>{{attribute}}</label>
+				<span>{{data.attributeScore}}</span>
+			</div>
+			<div class="score">
+				<label>{{skill}}</label>
+				<span>{{data.skillScore}}</span>
+			</div>
+		</div>
+
+		<div class="dice-tooltip">
+			<div class="formula">{{formula}}</div>
+
+			<div class="counter">
+				<label>{{localize "ROLL.DiceTotal"}}</label>
+				<span>{{diceTotal}}</span>
+			</div>
+			{{#if hasModifier}}
+			<div class="counter">
+				<label>{{localize "ROLL.SituationalBonus"}}</label>
+				<span>{{data.bonusModifier}}</span>
+			</div>
+			{{/if}}
+		</div>
+
+		{{#if spentPoints}}
+		<div class="counter">
+			<label>{{localize "DOCTORWHO.StoryPoints"}}</label>
+			<span>{{points}}</span>
+		</div>
+		{{/if}}
+
+		{{#unless data.isReaction}}
+		<h4 class="dice-total check-result">
+			<span class="total">{{total}}</span>
+			<span>{{localize outcome}}</span>
+			<span class="target">Difficulty {{data.difficulty}}</span>
+		</h4>
+		{{else}}
+		<h4 class="dice-total check-result">
+			<span class="total">Target</span>
+			<span>{{total}}</span>
+		</h4>
+		{{/unless}}
+
+		{{#unless data.isReaction}}
+		<div class="buttons">
+			{{#unless isMaxResult}}
+			<button data-action="spendPoint">
+				<i class="fas fa-arrow-up"></i>
+				<span>Raise</span>
+				<i class="fas fa-coin-vertical"></i>
+			</button>
+			{{/unless}}
+			{{#unless isMinResult}}
+			<button data-action="earnPoint">
+				<i class="fas fa-arrow-down"></i>
+				<span>Lower</span>
+				<i class="fas fa-coin"></i>
+			</button>
+			{{/unless}}
+		</div>
+		{{/unless}}
+	</div>
+</div>

@@ -1,6 +1,7 @@
+import { RollDialog } from '../applications/_module.mjs';
 import { SYSTEM } from '../config.mjs';
 
-export default class CharacterDW extends Actor {
+export default class DwCharacter extends Actor {
 	static getDefaultArtwork(actorData) {
 		let icon = `systems/${SYSTEM.id}/icons/${actorData.type}.svg`;
 		return { img: icon };

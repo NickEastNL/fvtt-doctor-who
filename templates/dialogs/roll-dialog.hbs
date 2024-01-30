@@ -1,0 +1,62 @@
+<form class="roll-dialog flexcol" autocomplete="off">
+	<section class="dialog-content">
+		<div class="form-group">
+			<label>Attribute</label>
+			<select name="attribute">
+				{{selectOptions attributes selected=attribute}}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>Skill</label>
+			<select name="skill">
+				{{selectOptions skills selected=skill}}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>Bonus Dice</label>
+			<input type="number" name="bonusDice" value="{{bonusDice}}">
+		</div>
+
+		<div class="form-group">
+			<label>Situational Bonus</label>
+			<input type="number" name="bonusModifier" value="{{bonusModifier}}">
+		</div>
+
+		<div class="form-group">
+			<label>Difficulty</label>
+			<input type="number" name="difficulty" value="{{difficulty}}">
+		</div>
+
+		<div class="form-group">
+			<label>Favor</label>
+			<select name="favor">
+				{{selectOptions favorChoices selected=favor}}
+			</select>
+		</div>
+	</section>
+
+	<footer class="dialog-footer flexcol">
+		<div class="form-group">
+			<label>Roll Mode</label>
+			<select name="rollMode">
+				{{selectOptions rollModes selected=rollMode localize=true}}
+			</select>
+		</div>
+
+		<div class="dialog-buttons">
+			<button type="button" class="dialog-button" data-button="standard">
+				<i class="fas fa-dice"></i>
+				<label>Standard Roll</label>
+			</button>
+
+			{{#if target}}
+			<button type="button" class="dialog-button" data-button="contested">
+				<i class="fas fa-dice"></i>
+				<label>Contested Roll</label>
+			</button>
+			{{/if}}
+		</div>
+	</footer>
+</form>

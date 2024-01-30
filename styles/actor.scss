@@ -3,6 +3,10 @@
 .doctor-who.sheet.actor {
 	--down-color: hsl(0, 50%, 25%);
 
+	.window-content {
+		overflow-y: scroll;
+	}
+
 	.actor-info {
 		flex: none;
 
